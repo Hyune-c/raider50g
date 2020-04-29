@@ -1,8 +1,8 @@
 package com.hyune.raider50g.controller;
 
 import com.hyune.raider50g.config.ConfigureDiscordApi;
+import com.hyune.raider50g.service.DiscordService;
 import org.javacord.api.DiscordApi;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,19 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class DiscordController {
 
   private final DiscordApi discordApi;
+  private final DiscordService discordService;
 
-  public DiscordController() {
+  public DiscordController(DiscordService discordService) {
+    this.discordService = discordService;
     this.discordApi = ConfigureDiscordApi.getDiscordApi();
-  }
-
-  @GetMapping("/init")
-  public String test() {
-    discordApi.addMessageCreateListener(event -> {
-      if (event.getMessageContent().equalsIgnoreCase("!ping")) {
-        event.getChannel().sendMessage("Pong!!!");
-      }
-    });
-
-    return "hello";
   }
 }
