@@ -23,13 +23,11 @@ public class DevController {
 
   @GetMapping("/pingpong")
   public ApiResponse addPingPong() {
-    devService.addPingPong();
-    return ApiResponse.ok("add PingPong");
+    return ApiResponse.ok(devService.addPingPong());
   }
 
   @GetMapping("/redblack")
   public ApiResponse addRedBlack() {
-    devService.addRedBlack();
-    return ApiResponse.ok("add RedBlack");
+    return ApiResponse.ok(devService.addRedBlack());
   }
 }

@@ -13,19 +13,23 @@ public class DevService {
     this.discordApi = ConfigureDiscordApi.getDiscordApi();
   }
 
-  public void addPingPong() {
+  public String addPingPong() {
     discordApi.addMessageCreateListener(event -> {
       if (event.getMessageContent().equalsIgnoreCase("!ping")) {
         event.getChannel().sendMessage("Pong!!!");
       }
     });
+
+    return "add PingPong";
   }
 
-  public void addRedBlack() {
+  public String addRedBlack() {
     discordApi.addMessageCreateListener(event -> {
       if (event.getMessageContent().equalsIgnoreCase("red")) {
         event.getChannel().sendMessage("black!!!");
       }
     });
+
+    return "add RedBlack";
   }
 }
