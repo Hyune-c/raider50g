@@ -26,8 +26,8 @@ public class DevController {
     return ApiResponse.ok(devService.addPingPong());
   }
 
-  @GetMapping("/redblack")
-  public ApiResponse addRedBlack() {
-    return ApiResponse.ok(devService.addRedBlack());
+  @GetMapping("/echo")
+  public ApiResponse echo() {
+    return ApiResponse.ok(devService.addEcho());
   }
 }

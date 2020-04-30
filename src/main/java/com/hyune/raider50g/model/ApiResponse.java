@@ -1,8 +1,11 @@
 package com.hyune.raider50g.model;
 
+import lombok.Getter;
+
+@Getter
 public class ApiResponse<T> {
 
-  private T body;
+  private final T body;
 
   private ApiResponse(T body) {
     this.body = body;

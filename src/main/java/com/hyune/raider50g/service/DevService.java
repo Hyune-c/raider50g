@@ -1,9 +1,11 @@
 package com.hyune.raider50g.service;
 
 import com.hyune.raider50g.config.ConfigureDiscordApi;
+import lombok.extern.slf4j.Slf4j;
 import org.javacord.api.DiscordApi;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class DevService {
 
@@ -23,13 +25,16 @@ public class DevService {
     return "add PingPong";
   }
 
-  public String addRedBlack() {
+  public String addEcho() {
     discordApi.addMessageCreateListener(event -> {
-      if (event.getMessageContent().equalsIgnoreCase("red")) {
-        event.getChannel().sendMessage("black!!!");
-      }
-    });
+          log.debug("### User : {}", event.getMessage().getUserAuthor().get());
 
-    return "add RedBlack";
+          if (!event.getMessage().getUserAuthor().get().getName().equals("50G BOT")) {
+            event.getChannel().sendMessage("echo :: " + event.getMessageContent());
+          }
+        }
+    );
+
+    return "add Echo";
   }
 }
