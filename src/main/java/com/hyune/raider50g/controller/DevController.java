@@ -17,8 +17,8 @@ public class DevController {
   }
 
   @GetMapping("/test")
-  public String test() {
-    return "hello";
+  public ApiResponse test() {
+    return ApiResponse.ok(devService.getChannelMessages());
   }
 
   @GetMapping("/pingpong")
