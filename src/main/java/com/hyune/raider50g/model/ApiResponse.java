@@ -1,33 +1,18 @@
 package com.hyune.raider50g.model;
 
+public class ApiResponse<T> {
 
-import java.util.HashMap;
-import java.util.Map;
+  private T body;
 
-public class ApiResponse {
-
-  private Map<String, ?> response;
-
-  public ApiResponse(Map<String, ?> responseMap) {
-    this.response = responseMap;
+  private ApiResponse(T body) {
+    this.body = body;
   }
 
-  public static ApiResponse ok(String message) {
-    Map<String, String> responseMap = new HashMap<>();
-    responseMap.put("message", message);
-
-    return new ApiResponse(responseMap);
+  public static <T> ApiResponse ok(T body) {
+    return new ApiResponse(body);
   }
 
-  public static ApiResponse error(String message, String errorTrace) {
-    Map<String, String> responseMap = new HashMap<>();
-    responseMap.put("message", message);
-    responseMap.put("errorTrace", errorTrace);
-
-    return new ApiResponse(responseMap);
-  }
-
-  public Map<String, ?> getResponse() {
-    return response;
+  public static <T> ApiResponse error(T body) {
+    return new ApiResponse(body);
   }
 }
