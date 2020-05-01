@@ -1,10 +1,12 @@
 package com.hyune.raider50g.service;
 
+import com.hyune.raider50g.Util.JsonUtil;
 import com.hyune.raider50g.config.ConfigureDiscordApi;
 import com.hyune.raider50g.property.Mock;
 import lombok.extern.slf4j.Slf4j;
 import org.javacord.api.DiscordApi;
 import org.json.simple.JSONArray;
+import org.json.simple.parser.ParseException;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -33,10 +35,15 @@ public class DevService {
         .path("/channels/" + Mock.CHANNEL_BLACKWING + "/messages")
         .build(false);
 
-    ResponseEntity<JSONArray> response = new RestTemplate().exchange(
-        uriComponents.toUri(), HttpMethod.GET, new HttpEntity<String>(headers), JSONArray.class);
+    ResponseEntity<String> response = new RestTemplate().exchange(
+        uriComponents.toUri(), HttpMethod.GET, new HttpEntity<String>(headers), String.class);
 
-    return response.getBody();
+    try {
+      JsonUtil.arrayParser(response.getBody());
+    } catch (ParseException e) {
+      e.printStackTrace();
+    }
+    return null;
   }
 
   public String addPingPong() {
