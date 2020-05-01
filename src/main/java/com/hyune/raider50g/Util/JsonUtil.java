@@ -43,11 +43,14 @@ public class JsonUtil {
     return jsonArray;
   }
 
-  public static List<Message> jsonArrayToMessage(String jsonString) throws ParseException {
+  public static List<Message> arrayToMessage(String jsonString) throws ParseException {
     JSONArray jsonArray = (JSONArray) new JSONParser().parse(jsonString);
-    log.debug("### jsonArray : {}", jsonArray);
     return (List<Message>) jsonArray.stream()
-        .map(obj -> gson.fromJson(obj.toString(), Message.class))
+        .map(obj -> objectToMessage(obj.toString()))
         .collect(Collectors.toList());
+  }
+
+  public static Message objectToMessage(String jsonString) {
+    return gson.fromJson(jsonString, Message.class);
   }
 }

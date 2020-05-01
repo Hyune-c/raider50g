@@ -43,11 +43,30 @@ public class DiscordService {
     try {
       ResponseEntity<String> response = new RestTemplate().exchange(
           uri, HttpMethod.GET, new HttpEntity<String>(headers), String.class);
-
-      return JsonUtil.jsonArrayToMessage(response.getBody());
+      return JsonUtil.arrayToMessage(response.getBody());
     } catch (ParseException e) {
       e.printStackTrace();
       return null;
     }
+  }
+
+  public Message getChannelMessage(String messageId) {
+    HttpHeaders headers = new HttpHeaders();
+    headers.add("Authorization", "Bot " + Mock.getBotToken());
+
+    UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder
+        .fromHttpUrl(Mock.DISCORD_API_URL)
+        .path("/channels/" + Mock.CHANNEL_BLACKWING + "/messages/" + messageId);
+    URI uri = uriComponentsBuilder.build(false).toUri();
+
+    ResponseEntity<String> response = new RestTemplate().exchange(
+        uri, HttpMethod.GET, new HttpEntity<String>(headers), String.class);
+
+    return JsonUtil.objectToMessage(response.getBody());
+  }
+
+  public String booking(String messageId) {
+
+    return null;
   }
 }
