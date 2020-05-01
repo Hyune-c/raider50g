@@ -7,8 +7,8 @@ import lombok.ToString;
 @ToString
 public class User {
 
-  private final boolean bot;
   private final String id;
+  private final boolean bot;
   private final String username;
 
   public User(boolean bot, String id, String username) {

@@ -2,6 +2,7 @@ package com.hyune.raider50g.Util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.hyune.raider50g.model.Message;
 import com.hyune.raider50g.model.User;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
@@ -25,8 +26,10 @@ public class JsonUtil {
 
       Gson gson = new GsonBuilder().create();
       User user = gson.fromJson(jsonObj.get("author").toString(), User.class);
-
       log.debug("### User : {}", user.toString());
+
+      Message message = gson.fromJson(jsonObj.toString(), Message.class);
+      log.debug("### message : {}", message.toString());
     }
 
     return jsonArray;
