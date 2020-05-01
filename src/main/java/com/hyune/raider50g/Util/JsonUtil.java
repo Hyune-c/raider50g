@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.hyune.raider50g.model.Message;
 import com.hyune.raider50g.model.User;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -13,6 +15,13 @@ import org.json.simple.parser.ParseException;
 @Slf4j
 public class JsonUtil {
 
+  private static final Gson gson;
+
+  static {
+    gson = new GsonBuilder().create();
+  }
+
+  // Dev Util
   public static JSONArray arrayParser(String jsonString) throws ParseException {
     JSONArray jsonArray = (JSONArray) new JSONParser().parse(jsonString);
 
@@ -24,7 +33,6 @@ public class JsonUtil {
       JSONObject jsonObj = (JSONObject) jsonArray.get(i);
       log.debug("### jsonObj.get(\"author\") : {}", jsonObj.get("author"));
 
-      Gson gson = new GsonBuilder().create();
       User user = gson.fromJson(jsonObj.get("author").toString(), User.class);
       log.debug("### User : {}", user.toString());
 
@@ -33,5 +41,13 @@ public class JsonUtil {
     }
 
     return jsonArray;
+  }
+
+  public static List<Message> jsonArrayToMessage(String jsonString) throws ParseException {
+    JSONArray jsonArray = (JSONArray) new JSONParser().parse(jsonString);
+    log.debug("### jsonArray : {}", jsonArray);
+    return (List<Message>) jsonArray.stream()
+        .map(obj -> gson.fromJson(obj.toString(), Message.class))
+        .collect(Collectors.toList());
   }
 }
