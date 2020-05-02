@@ -9,5 +9,4 @@ class Raider50gApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }

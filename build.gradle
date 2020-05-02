@@ -19,6 +19,8 @@ dependencies {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
 
+    testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.15.0'
+
     implementation 'org.javacord:javacord:3.0.5'
 
     compileOnly 'org.projectlombok:lombok:1.18.12'
