@@ -18,8 +18,14 @@ public class CustomAdvice {
   }
 
   @ExceptionHandler({ParseException.class, CustomParseException.class})
-  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+  @ResponseStatus(HttpStatus.FORBIDDEN)
   public ApiResponse handleParseException(ParseException e) {
+    return ApiResponse.error(e.getMessage());
+  }
+
+  @ExceptionHandler(FailedBookingException.class)
+  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+  public ApiResponse handleFailedBookingException(FailedBookingException e) {
     return ApiResponse.error(e.getMessage());
   }
 }
