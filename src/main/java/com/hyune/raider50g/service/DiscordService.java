@@ -65,8 +65,13 @@ public class DiscordService {
     return JsonUtil.objectToMessage(response.getBody());
   }
 
-  public String booking(String messageId) {
+  public Message booking(Message message) {
+    if (message.isBookingMessage()) {
+      log.debug("### Booking 성공 : {}", message.getContent());
+      return message;
+    }
 
+    log.debug("### Booking 실패 : {}", message.getContent());
     return null;
   }
 }

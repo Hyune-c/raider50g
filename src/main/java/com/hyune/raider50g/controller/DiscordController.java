@@ -28,9 +28,4 @@ public class DiscordController {
   public ApiResponse message(@PathVariable String messageId) {
     return ApiResponse.ok(discordService.getChannelMessage(messageId));
   }
-
-  @GetMapping("/booking")
-  public ApiResponse booking(@RequestParam String messageId) {
-    return ApiResponse.ok(discordService.booking(messageId));
-  }
 }
