@@ -1,7 +1,11 @@
 package com.hyune.raider50g.service;
 
+import static com.hyune.raider50g.message.Booking.INVALID_AUTHOR;
+
 import com.hyune.raider50g.Util.JsonUtil;
 import com.hyune.raider50g.config.ConfigureDiscordApi;
+import com.hyune.raider50g.exception.FailedBookingException;
+import com.hyune.raider50g.model.Booking;
 import com.hyune.raider50g.model.Message;
 import com.hyune.raider50g.property.Mock;
 import java.net.URI;
@@ -65,13 +69,11 @@ public class DiscordService {
     return JsonUtil.objectToMessage(response.getBody());
   }
 
-  public Message booking(Message message) {
-    if (message.isBookingMessage()) {
-      log.debug("### Booking 성공 : {}", message.getContent());
-      return message;
+  public Booking booking(Message message) {
+    if (message.getAuthor().isBot()) {
+      throw new FailedBookingException(INVALID_AUTHOR);
     }
 
-    log.debug("### Booking 실패 : {}", message.getContent());
-    return null;
+    return new Booking(message.getContent());
   }
 }

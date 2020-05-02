@@ -23,20 +23,4 @@ public class Message {
     this.content = content;
     this.timestamp = timestamp;
   }
-
-  public boolean isBookingMessage() {
-    if (author.isBot() || !isParsedContent()) {
-      log.debug("### author.isBot() : {}", author.isBot());
-      log.debug("### !isParsed() : {}", !isParsedContent());
-      return false;
-    }
-
-    return true;
-  }
-
-  private boolean isParsedContent() {
-    String[] splitContent = content.replaceAll(" ", "").split(",");
-    log.debug("### splitContent : {}", (Object) splitContent);
-    return splitContent.length == VALID_PARSED_LENGTH;
-  }
 }
