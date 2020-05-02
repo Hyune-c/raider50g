@@ -17,7 +17,7 @@ public class CustomAdvice {
     return ApiResponse.error(e.getMessage());
   }
 
-  @ExceptionHandler(ParseException.class)
+  @ExceptionHandler({ParseException.class, CustomParseException.class})
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
   public ApiResponse handleParseException(ParseException e) {
     return ApiResponse.error(e.getMessage());
