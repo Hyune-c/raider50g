@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -19,8 +20,14 @@ public class Booking {
   private Long id;
 
   @Embedded
-  private BaseInfo baseInfo;
+  private RaidInfo raidInfo;
 
   @Embedded
   private Raider raider;
+
+  @Builder
+  public Booking(RaidInfo raidInfo, Raider raider) {
+    this.raidInfo = raidInfo;
+    this.raider = raider;
+  }
 }
