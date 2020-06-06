@@ -5,7 +5,8 @@ build/
 !**/src/main/**
 !**/src/test/**
 /logs/
-/src/main/resources/application.properties
+/src/main/resources/application-dev.yml
+
 ### STS ###
 .apt_generated
 .classpath
