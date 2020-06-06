@@ -2,7 +2,9 @@ package com.hyune.raider50g.service;
 
 import com.hyune.raider50g.Util.JsonUtil;
 import com.hyune.raider50g.config.ConfigureDiscordApi;
-import com.hyune.raider50g.property.Mock;
+import com.hyune.raider50g.property.ApiURL;
+import com.hyune.raider50g.property.Channel;
+import com.hyune.raider50g.property.Token;
 import lombok.extern.slf4j.Slf4j;
 import org.javacord.api.DiscordApi;
 import org.json.simple.JSONArray;
@@ -28,11 +30,11 @@ public class DevService {
 
   public JSONArray getChannelMessages() {
     HttpHeaders headers = new HttpHeaders();
-    headers.add("Authorization", "Bot " + Mock.getBotToken());
+    headers.add("Authorization", "Bot " + Token.getBotToken());
 
     UriComponents uriComponents = UriComponentsBuilder
-        .fromHttpUrl(Mock.DISCORD_API_URL)
-        .path("/channels/" + Mock.CHANNEL_BLACKWING + "/messages")
+        .fromHttpUrl(ApiURL.DISCORD_API)
+        .path("/channels/" + Channel.BLACKWING + "/messages")
         .build(false);
 
     ResponseEntity<String> response = new RestTemplate().exchange(

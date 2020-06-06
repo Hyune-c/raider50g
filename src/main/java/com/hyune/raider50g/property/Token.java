@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class Mock {
+public class Token {
 
   private static String BOT_TOKEN;
 
@@ -16,7 +16,4 @@ public class Mock {
   public static String getBotToken() {
     return BOT_TOKEN;
   }
-
-  public static String DISCORD_API_URL = "https://discordapp.com/api";
-  public static String CHANNEL_BLACKWING = "704974219079057488";
 }

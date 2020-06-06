@@ -7,7 +7,9 @@ import com.hyune.raider50g.config.ConfigureDiscordApi;
 import com.hyune.raider50g.exception.FailedBookingException;
 import com.hyune.raider50g.model.Booking;
 import com.hyune.raider50g.model.Message;
-import com.hyune.raider50g.property.Mock;
+import com.hyune.raider50g.property.ApiURL;
+import com.hyune.raider50g.property.Channel;
+import com.hyune.raider50g.property.Token;
 import java.net.URI;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -34,11 +36,11 @@ public class DiscordService {
 
   public List<Message> getChannelMessages(String after) {
     HttpHeaders headers = new HttpHeaders();
-    headers.add("Authorization", "Bot " + Mock.getBotToken());
+    headers.add("Authorization", "Bot " + Token.getBotToken());
 
     UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder
-        .fromHttpUrl(Mock.DISCORD_API_URL)
-        .path("/channels/" + Mock.CHANNEL_BLACKWING + "/messages");
+        .fromHttpUrl(ApiURL.DISCORD_API)
+        .path("/channels/" + Channel.BLACKWING + "/messages");
     if (!ObjectUtils.isEmpty(after)) {
       uriComponentsBuilder.queryParam("after", after);
     }
@@ -56,11 +58,11 @@ public class DiscordService {
 
   public Message getChannelMessage(String messageId) {
     HttpHeaders headers = new HttpHeaders();
-    headers.add("Authorization", "Bot " + Mock.getBotToken());
+    headers.add("Authorization", "Bot " + Token.getBotToken());
 
     UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder
-        .fromHttpUrl(Mock.DISCORD_API_URL)
-        .path("/channels/" + Mock.CHANNEL_BLACKWING + "/messages/" + messageId);
+        .fromHttpUrl(ApiURL.DISCORD_API)
+        .path("/channels/" + Channel.BLACKWING + "/messages/" + messageId);
     URI uri = uriComponentsBuilder.build(false).toUri();
 
     ResponseEntity<String> response = new RestTemplate().exchange(
@@ -75,5 +77,13 @@ public class DiscordService {
     }
 
     return new Booking(message.getContent());
+  }
+
+  public Message sendMessage(String channelId, Message message) {
+    if (message.getAuthor().isBot()) {
+      throw new FailedBookingException(INVALID_AUTHOR);
+    }
+
+    return null;
   }
 }
