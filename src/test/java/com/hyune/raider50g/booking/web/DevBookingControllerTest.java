@@ -4,9 +4,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.hyune.raider50g.booking.data.RaidInfo;
 import com.hyune.raider50g.booking.data.Raider;
+import com.hyune.raider50g.booking.data.type.ClassType;
 import com.hyune.raider50g.booking.data.type.RaidType;
 import com.hyune.raider50g.booking.web.model.BookingCommand;
-import com.hyune.raider50g.model.type.ClassType;
 import java.time.LocalDate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,18 +20,21 @@ class DevBookingControllerTest {
   @Test
   void checkInput_BookingCommand() {
     // given
+    RaidType raidType = RaidType.BLACKWING;
     LocalDate raidDate = LocalDate.now().plusDays(7);
+    RaidInfo raidInfo = RaidInfo.builder()
+        .raidType(raidType)
+        .raidDate(raidDate).build();
+
+    ClassType classType = ClassType.DRUID;
     String raiderId = "드루티어는오십골";
+    Raider raider = Raider.builder()
+        .classType(classType)
+        .raiderId(raiderId).build();
 
     // when
-    RaidInfo raidInfo = RaidInfo.builder()
-        .raidType(RaidType.BLACKWING)
-        .raidDate(raidDate).build().getTestRaidInfo();
-    Raider raider = Raider.builder()
-        .classType(ClassType.DRUID)
-        .raiderId(raiderId).build();
     BookingCommand bookingCommand = BookingCommand.builder()
-        .raidInfo(raidInfo)
+        .raidInfo(raidInfo.getTestRaidInfo())
         .raider(raider).build();
 
     // then
