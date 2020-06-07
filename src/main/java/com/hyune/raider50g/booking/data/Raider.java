@@ -1,7 +1,7 @@
 package com.hyune.raider50g.booking.data;
 
 
-import com.hyune.raider50g.model.type.ClassType;
+import com.hyune.raider50g.booking.data.type.ClassType;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
