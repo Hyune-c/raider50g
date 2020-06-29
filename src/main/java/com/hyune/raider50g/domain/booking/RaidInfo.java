@@ -1,6 +1,6 @@
 package com.hyune.raider50g.domain.booking;
 
-import com.hyune.raider50g.domain.booking.type.DungeonType;
+import com.hyune.raider50g.common.type.DungeonType;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 import javax.persistence.Column;

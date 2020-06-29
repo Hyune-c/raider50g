@@ -1,4 +1,4 @@
-package com.hyune.raider50g.Util;
+package com.hyune.raider50g.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

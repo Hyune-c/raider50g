@@ -1,11 +1,11 @@
 package com.hyune.raider50g.web;
 
-import com.hyune.raider50g.Util.JsonUtil;
+import com.hyune.raider50g.util.JsonUtil;
 import com.hyune.raider50g.domain.booking.RaidInfo;
 import com.hyune.raider50g.domain.booking.Raider;
 import com.hyune.raider50g.domain.booking.dto.BookingCommand;
-import com.hyune.raider50g.domain.booking.type.ClassType;
-import com.hyune.raider50g.domain.booking.type.DungeonType;
+import com.hyune.raider50g.common.type.ClassType;
+import com.hyune.raider50g.common.type.DungeonType;
 import java.time.LocalDate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
