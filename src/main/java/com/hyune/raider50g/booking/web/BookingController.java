@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/dev-api/booking")
+@RequestMapping("/api/booking")
 @RestController
-public class DevBookingController {
+public class BookingController {
 
   @PostMapping
-  public BookingCommand makeBookingCommand(@RequestBody BookingCommand bookingCommand) {
+  public BookingCommand makeBooking(@RequestBody BookingCommand bookingCommand) {
     return bookingCommand;
   }
 }

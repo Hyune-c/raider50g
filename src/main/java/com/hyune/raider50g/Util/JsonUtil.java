@@ -27,4 +27,8 @@ public class JsonUtil {
           }
         }.nullSafe()).create();
   }
+
+  public static Gson getGson() {
+    return gson;
+  }
 }
