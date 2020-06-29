@@ -1,6 +1,8 @@
-package com.hyune.raider50g.booking.web;
+package com.hyune.raider50g.web;
 
-import com.hyune.raider50g.booking.web.model.BookingCommand;
+import com.hyune.raider50g.domain.booking.Booking;
+import com.hyune.raider50g.domain.booking.dto.BookingCommand;
+import com.hyune.raider50g.service.BookingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,8 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class BookingController {
 
+  private final BookingService bookingService;
+
   @PostMapping
-  public BookingCommand makeBooking(@RequestBody BookingCommand bookingCommand) {
-    return bookingCommand;
+  public Booking createBooking(@RequestBody BookingCommand bookingCommand) {
+    return bookingService.createBooking(bookingCommand);
   }
 }

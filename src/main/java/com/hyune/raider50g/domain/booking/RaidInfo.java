@@ -1,6 +1,6 @@
-package com.hyune.raider50g.booking.data;
+package com.hyune.raider50g.domain.booking;
 
-import com.hyune.raider50g.booking.data.type.DungeonType;
+import com.hyune.raider50g.domain.booking.type.DungeonType;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 import javax.persistence.Column;
@@ -37,7 +37,7 @@ public class RaidInfo {
   @Column(nullable = false)
   private LocalDate createdAt = LocalDate.now();
 
-  public static RaidInfo from(DungeonType dungeonType, LocalDate raidDate) {
+  public static RaidInfo of(DungeonType dungeonType, LocalDate raidDate) {
     return RaidInfo.builder()
         .dungeonType(dungeonType)
         .raidDate(raidDate)

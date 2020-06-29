@@ -1,4 +1,4 @@
-package com.hyune.raider50g.booking.data.type;
+package com.hyune.raider50g.domain.booking.type;
 
 import static java.util.Arrays.asList;
 

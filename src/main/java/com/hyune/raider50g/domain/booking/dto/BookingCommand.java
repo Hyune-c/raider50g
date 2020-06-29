@@ -1,7 +1,7 @@
-package com.hyune.raider50g.booking.web.model;
+package com.hyune.raider50g.domain.booking.dto;
 
-import com.hyune.raider50g.booking.data.RaidInfo;
-import com.hyune.raider50g.booking.data.Raider;
+import com.hyune.raider50g.domain.booking.RaidInfo;
+import com.hyune.raider50g.domain.booking.Raider;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

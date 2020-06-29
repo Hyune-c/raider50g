@@ -1,4 +1,4 @@
-package com.hyune.raider50g.booking.data.type;
+package com.hyune.raider50g.domain.booking.type;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,5 +1,6 @@
-package com.hyune.raider50g.booking.data;
+package com.hyune.raider50g.domain.booking;
 
+import com.hyune.raider50g.domain.booking.dto.BookingCommand;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,4 +28,11 @@ public class Booking {
 
   @Embedded
   private Raider raider;
+
+  public static Booking of(BookingCommand bookingCommand) {
+    return Booking.builder()
+        .raidInfo(bookingCommand.getRaidInfo())
+        .raider(bookingCommand.getRaider())
+        .build();
+  }
 }

@@ -1,11 +1,11 @@
-package com.hyune.raider50g.booking.web;
+package com.hyune.raider50g.web;
 
 import com.hyune.raider50g.Util.JsonUtil;
-import com.hyune.raider50g.booking.data.RaidInfo;
-import com.hyune.raider50g.booking.data.Raider;
-import com.hyune.raider50g.booking.data.type.ClassType;
-import com.hyune.raider50g.booking.data.type.DungeonType;
-import com.hyune.raider50g.booking.web.model.BookingCommand;
+import com.hyune.raider50g.domain.booking.RaidInfo;
+import com.hyune.raider50g.domain.booking.Raider;
+import com.hyune.raider50g.domain.booking.dto.BookingCommand;
+import com.hyune.raider50g.domain.booking.type.ClassType;
+import com.hyune.raider50g.domain.booking.type.DungeonType;
 import java.time.LocalDate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,20 +17,20 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-@DisplayName("Booking")
+@DisplayName("Booking : Web")
 @WebMvcTest(BookingController.class)
 class BookingControllerTest {
 
   @Autowired
   private MockMvc mockMvc;
 
-  @DisplayName("/api/booking 를 통해 기본 값이 설정된 객체가 정상적으로 생성되는지")
+  @DisplayName("/api/booking")
   @Test
-  void check_Maked_BookingCommand() throws Exception {
+  void createBooking() throws Exception {
     // given
     DungeonType dungeonType = DungeonType.BLACKWING;
     LocalDate raidDate = LocalDate.now().plusDays(7);
-    RaidInfo raidInfo = RaidInfo.from(dungeonType, raidDate);
+    RaidInfo raidInfo = RaidInfo.of(dungeonType, raidDate);
 
     ClassType classType = ClassType.DRUID;
     String raiderId = "드루티어는오십골";
