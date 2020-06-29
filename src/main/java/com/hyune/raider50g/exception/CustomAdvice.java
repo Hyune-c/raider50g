@@ -10,7 +10,7 @@ public class CustomAdvice {
 
   @ExceptionHandler(Exception.class)
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-  public String handleException(Exception e) {
-    return e.getMessage();
+  public ExceptionResponse handleException(Exception e) {
+    return ExceptionResponse.from(e);
   }
 }
