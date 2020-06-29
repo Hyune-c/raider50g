@@ -1,16 +1,19 @@
 package com.hyune.raider50g.booking.data;
 
-
 import com.hyune.raider50g.booking.data.type.ClassType;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Embeddable
 public class Raider {
@@ -21,10 +24,4 @@ public class Raider {
 
   @Column(nullable = false)
   private String raiderId;
-
-  @Builder
-  public Raider(ClassType classType, String raiderId) {
-    this.classType = classType;
-    this.raiderId = raiderId;
-  }
 }

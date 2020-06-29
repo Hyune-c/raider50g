@@ -1,16 +1,19 @@
 package com.hyune.raider50g.booking.data;
 
-
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Getter
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Entity
 public class Booking {
@@ -24,10 +27,4 @@ public class Booking {
 
   @Embedded
   private Raider raider;
-
-  @Builder
-  public Booking(RaidInfo raidInfo, Raider raider) {
-    this.raidInfo = raidInfo;
-    this.raider = raider;
-  }
 }
