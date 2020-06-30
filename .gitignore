@@ -5,7 +5,9 @@ build/
 !**/src/main/**
 !**/src/test/**
 /logs/
-/src/main/resources/application-dev.yml
+/src/main/resources/application-db.yml
+/src/main/resources/application-app.yml
+/src/main/resources/data.sql
 
 ### STS ###
 .apt_generated
