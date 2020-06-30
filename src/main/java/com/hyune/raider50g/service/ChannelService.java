@@ -3,9 +3,8 @@ package com.hyune.raider50g.service;
 import com.google.gson.Gson;
 import com.hyune.raider50g.common.type.Channel;
 import com.hyune.raider50g.common.type.ClassType;
+import com.hyune.raider50g.config.property.DiscordProperty;
 import com.hyune.raider50g.domain.booking.Booking;
-import com.hyune.raider50g.property.ApiURL;
-import com.hyune.raider50g.property.Token;
 import com.hyune.raider50g.repository.BookingRepository;
 import java.net.URI;
 import java.time.LocalDate;
@@ -26,6 +25,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class ChannelService {
 
   private final BookingRepository bookingRepository;
+  private final DiscordProperty discordProperty;
 
   private String makeBookingList(Channel channel, LocalDate raidDate, List<Booking> bookings) {
     StringBuilder sb = new StringBuilder();
@@ -51,7 +51,7 @@ public class ChannelService {
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
     headers.add("User-Agent", "PostmanRuntime/7.25.0");
-    headers.add("Authorization", "Bot " + Token.getBotToken());
+    headers.add("Authorization", "Bot " + discordProperty.getToken());
 
     Map<String, String> payloads = new HashMap<>();
     String bookingListString = makeBookingList(channel, raidDate, bookingRepository.find(raidDate));
@@ -60,7 +60,7 @@ public class ChannelService {
     HttpEntity<String> request = new HttpEntity<>(new Gson().toJson(payloads), headers);
 
     URI uri = UriComponentsBuilder
-        .fromHttpUrl(ApiURL.DISCORD_API)
+        .fromHttpUrl(discordProperty.getApiUrl())
         .pathSegment("channels", "{channelId}", "messages")
         .build(channel.getChannelId());
 
