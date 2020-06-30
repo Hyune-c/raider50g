@@ -16,10 +16,11 @@ repositories {
 dependencies {
     implementation group: 'com.querydsl', name: 'querydsl-jpa', version: '4.3.1'
     implementation group: 'com.querydsl', name: 'querydsl-apt', version: '4.3.1'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation("com.querydsl:querydsl-sql-spring:4.3.1")
 
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-parent:2.2.2.RELEASE'
 
     testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.15.0'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
