@@ -20,7 +20,7 @@ public class BookingService {
 
   public String makeInviteMacro(LocalDate findDate) {
     return bookingRepository.find(findDate).stream()
-        .map(booking -> "/초대 " + booking.getRaider().getRaiderId())
+        .map(booking -> booking.getRaider().inviteMacro())
         .collect(Collectors.joining("\n"));
   }
 }
