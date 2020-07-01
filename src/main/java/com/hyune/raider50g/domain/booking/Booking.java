@@ -1,5 +1,6 @@
 package com.hyune.raider50g.domain.booking;
 
+import com.hyune.raider50g.common.type.ClassType;
 import com.hyune.raider50g.domain.booking.dto.BookingCommand;
 import java.io.Serializable;
 import javax.persistence.Embedded;
@@ -39,5 +40,13 @@ public class Booking implements Serializable {
 
   public void cancel() {
     raidInfo.cancel();
+  }
+
+  public String getRaiderId() {
+    return raider.getRaiderId();
+  }
+
+  public ClassType getClassType() {
+    return raider.getClassType();
   }
 }

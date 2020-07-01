@@ -8,6 +8,7 @@ import com.hyune.raider50g.domain.booking.Booking;
 import com.hyune.raider50g.repository.BookingRepository;
 import java.net.URI;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,25 +28,26 @@ public class ChannelService {
   private final BookingRepository bookingRepository;
   private final DiscordProperty discordProperty;
 
-  private String makeBookingList(Channel channel, LocalDate raidDate, List<Booking> bookings) {
-    StringBuilder sb = new StringBuilder();
+  private String bookingListTitle(Channel channel, LocalDate raidDate, int raiderCount) {
+    return String.format("%s\t%s (일) PM 19:00\t%d/40", channel.getKey(), raidDate, raiderCount);
+  }
 
-    String title = "```" + channel.getKey() + "\t" + raidDate + " (일) PM 19:00 \t" + bookings.size()
-        + "/40```";
-    sb.append(title);
+  private String bookingListContent(List<Booking> bookings) {
+    return Arrays.stream(ClassType.values()).map(classType ->
+        classType.getName() + "\t" + bookings.stream()
+            .filter(booking -> booking.getClassType().equals(classType))
+            .map(Booking::getRaiderId)
+            .collect(Collectors.joining("\t"))
+    ).collect(Collectors.joining("\n"));
+  }
 
-    sb.append("```");
-    for (ClassType classType : ClassType.values()) {
-      sb.append(classType.getNames().get(0)).append("\t");
-      sb.append(bookings.stream()
-          .filter(booking -> classType.equals(booking.getRaider().getClassType()))
-          .map(booking -> booking.getRaider().getRaiderId())
-          .collect(Collectors.joining("\t")));
-      sb.append("\n");
-    }
-    sb.append("```");
-
-    return sb.toString();
+  protected String createBookingList(Channel channel, LocalDate raidDate, List<Booking> bookings) {
+    return "```"
+        + bookingListTitle(channel, raidDate, bookings.size())
+        + "```"
+        + "```"
+        + bookingListContent(bookings)
+        + "```";
   }
 
   public void sendBookingList(Channel channel, LocalDate raidDate) {
@@ -55,7 +57,8 @@ public class ChannelService {
     headers.add("Authorization", "Bot " + discordProperty.getToken());
 
     Map<String, String> payloads = new HashMap<>();
-    String bookingListString = makeBookingList(channel, raidDate, bookingRepository.findAll(raidDate));
+    String bookingListString = createBookingList(channel, raidDate,
+        bookingRepository.findAll(raidDate));
     payloads.put("content", bookingListString);
 
     HttpEntity<String> request = new HttpEntity<>(new Gson().toJson(payloads), headers);
