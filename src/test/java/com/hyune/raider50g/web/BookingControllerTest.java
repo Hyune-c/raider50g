@@ -24,7 +24,7 @@ class BookingControllerTest {
   @Autowired
   private MockMvc mockMvc;
 
-  @DisplayName("/api/booking")
+  @DisplayName("예약하기")
   @Test
   void createBooking() throws Exception {
     // given

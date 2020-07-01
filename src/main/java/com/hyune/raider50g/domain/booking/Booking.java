@@ -1,6 +1,7 @@
 package com.hyune.raider50g.domain.booking;
 
 import com.hyune.raider50g.domain.booking.dto.BookingCommand;
+import java.io.Serializable;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,7 +18,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor
 @Entity
-public class Booking {
+public class Booking implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,5 +35,9 @@ public class Booking {
         .raidInfo(bookingCommand.getRaidInfo())
         .raider(bookingCommand.getRaider())
         .build();
+  }
+
+  public void cancel() {
+    raidInfo.cancel();
   }
 }

@@ -30,7 +30,8 @@ public class ChannelService {
   private String makeBookingList(Channel channel, LocalDate raidDate, List<Booking> bookings) {
     StringBuilder sb = new StringBuilder();
 
-    String title = "```" + channel.getKey() + "\t" + raidDate + "\t" + bookings.size() + "/40```";
+    String title = "```" + channel.getKey() + "\t" + raidDate + " (일) PM 19:00 \t" + bookings.size()
+        + "/40```";
     sb.append(title);
 
     sb.append("```");
@@ -54,7 +55,7 @@ public class ChannelService {
     headers.add("Authorization", "Bot " + discordProperty.getToken());
 
     Map<String, String> payloads = new HashMap<>();
-    String bookingListString = makeBookingList(channel, raidDate, bookingRepository.find(raidDate));
+    String bookingListString = makeBookingList(channel, raidDate, bookingRepository.findAll(raidDate));
     payloads.put("content", bookingListString);
 
     HttpEntity<String> request = new HttpEntity<>(new Gson().toJson(payloads), headers);

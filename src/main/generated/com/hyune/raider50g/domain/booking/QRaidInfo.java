@@ -21,7 +21,7 @@ public class QRaidInfo extends BeanPath<RaidInfo> {
 
     public final BooleanPath cancel = createBoolean("cancel");
 
-    public final DatePath<java.time.LocalDate> createdAt = createDate("createdAt", java.time.LocalDate.class);
+    public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
 
     public final EnumPath<com.hyune.raider50g.common.type.DungeonType> dungeonType = createEnum("dungeonType", com.hyune.raider50g.common.type.DungeonType.class);
 
