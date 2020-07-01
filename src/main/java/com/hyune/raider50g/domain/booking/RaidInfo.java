@@ -45,6 +45,10 @@ public class RaidInfo {
   }
 
   public void cancel() {
-    this.cancel = true;
+    if (cancel) {
+      throw new RuntimeException("이미 취소된 예약 입니다");
+    }
+
+    cancel = true;
   }
 }

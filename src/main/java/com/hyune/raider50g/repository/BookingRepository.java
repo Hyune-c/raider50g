@@ -22,6 +22,22 @@ public class BookingRepository {
     return booking;
   }
 
+  @Transactional
+  public Booking cancel(Booking booking) {
+    booking.cancel();
+    return booking;
+  }
+
+  public Booking findOne(LocalDate findDate, String raiderId) {
+    JPAQueryFactory queryFactory = new JPAQueryFactory(em);
+    QBooking booking = QBooking.booking;
+
+    return queryFactory.selectFrom(booking)
+        .where(booking.raidInfo.raidDate.eq(findDate)
+            , booking.raider.raiderId.eq(raiderId))
+        .fetchOne();
+  }
+
   public List<Booking> findAll(LocalDate findDate) {
     JPAQueryFactory queryFactory = new JPAQueryFactory(em);
     QBooking booking = QBooking.booking;
