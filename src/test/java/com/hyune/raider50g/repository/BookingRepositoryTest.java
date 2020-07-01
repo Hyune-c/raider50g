@@ -24,7 +24,7 @@ class BookingRepositoryTest {
     LocalDate findDate = LocalDate.of(2020, 7, 5);
 
     // when
-    List<Booking> findBookings = bookingRepository.find(findDate);
+    List<Booking> findBookings = bookingRepository.findAll(findDate);
 
     // then
     assertThat(findBookings).hasSizeGreaterThan(0);

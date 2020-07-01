@@ -22,7 +22,7 @@ public class BookingRepository {
     return booking;
   }
 
-  public List<Booking> find(LocalDate findDate) {
+  public List<Booking> findAll(LocalDate findDate) {
     JPAQueryFactory queryFactory = new JPAQueryFactory(em);
     QBooking booking = QBooking.booking;
 

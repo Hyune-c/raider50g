@@ -1,5 +1,7 @@
 package com.hyune.raider50g.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.time.LocalDate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,6 +25,7 @@ public class BookingServiceTest {
     String inviteMacro = bookingService.makeInviteMacro(findDate);
 
     // then
-    System.out.println(inviteMacro);
+    assertThat(inviteMacro)
+        .contains("/초대 ");
   }
 }
