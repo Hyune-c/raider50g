@@ -1,7 +1,6 @@
 package com.hyune.raider50g.domain.booking;
 
 import com.hyune.raider50g.common.type.DungeonType;
-import io.swagger.annotations.ApiModelProperty;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
@@ -28,12 +27,10 @@ public class RaidInfo {
   @Column(nullable = false)
   private LocalDate raidDate;
 
-  @ApiModelProperty(hidden = true)
   @Builder.Default
   @Column(nullable = false)
   private Boolean cancel = false;
 
-  @ApiModelProperty(hidden = true)
   @Builder.Default
   @Column(nullable = false)
   private LocalDateTime createdAt = LocalDateTime.now();

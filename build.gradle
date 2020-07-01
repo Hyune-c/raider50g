@@ -19,8 +19,7 @@ dependencies {
     implementation("com.querydsl:querydsl-sql-spring:4.3.1")
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-parent:2.2.2.RELEASE'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-webflux', version: '2.3.1.RELEASE'
 
     testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.15.0'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
@@ -29,9 +28,6 @@ dependencies {
 
     implementation 'com.h2database:h2:1.4.197'
     runtimeOnly 'mysql:mysql-connector-java'
-
-    implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
-    implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 
     implementation 'org.javacord:javacord:3.0.5'
 
