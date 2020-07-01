@@ -27,6 +27,7 @@ dependencies {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
 
+    implementation 'com.h2database:h2:1.4.197'
     runtimeOnly 'mysql:mysql-connector-java'
 
     implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
