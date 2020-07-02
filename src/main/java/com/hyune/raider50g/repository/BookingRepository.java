@@ -24,8 +24,9 @@ public class BookingRepository {
 
   @Transactional
   public Booking cancel(Booking booking) {
-    booking.cancel();
-    return booking;
+    Booking cancelBooking = em.find(Booking.class, booking.getId());
+    cancelBooking.cancel();
+    return cancelBooking;
   }
 
   public Booking findOne(LocalDate findDate, String raiderId) {
