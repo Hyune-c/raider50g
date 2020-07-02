@@ -45,7 +45,7 @@ public class BookingRepository {
 
     return queryFactory.selectFrom(booking)
         .where(booking.raidInfo.raidDate.eq(findDate)
-            , booking.raidInfo.cancel.isFalse())
+            , booking.cancel.isFalse())
         .fetch();
   }
 }

@@ -9,6 +9,7 @@ import com.hyune.raider50g.domain.booking.RaidInfo;
 import com.hyune.raider50g.domain.booking.Raider;
 import com.hyune.raider50g.domain.booking.dto.BookingCommand;
 import java.time.LocalDate;
+import javax.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,7 @@ public class BookingServiceTest {
   }
 
   @DisplayName("취소하기")
+  @Transactional
   @Test
   public void cancelBooking() {
     // given
@@ -59,7 +61,7 @@ public class BookingServiceTest {
     Booking cancelBooking = bookingService.cancelBooking(bookingCommand);
 
     // then
-    assertThat(cancelBooking.getRaidInfo().getCancel())
+    assertThat(cancelBooking.getCancel())
         .isTrue();
   }
 }

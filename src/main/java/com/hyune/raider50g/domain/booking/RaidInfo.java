@@ -27,26 +27,10 @@ public class RaidInfo {
   @Column(nullable = false)
   private LocalDate raidDate;
 
-  @Builder.Default
-  @Column(nullable = false)
-  private Boolean cancel = false;
-
-  @Builder.Default
-  @Column(nullable = false)
-  private LocalDateTime createdAt = LocalDateTime.now();
-
   public static RaidInfo of(DungeonType dungeonType, LocalDate raidDate) {
     return RaidInfo.builder()
         .dungeonType(dungeonType)
         .raidDate(raidDate)
         .build();
-  }
-
-  public void cancel() {
-    if (cancel) {
-      throw new RuntimeException("이미 취소된 예약 입니다");
-    }
-
-    cancel = true;
   }
 }
