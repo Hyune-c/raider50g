@@ -22,6 +22,9 @@ public class ChannelController {
   @GetMapping("/{channelName}")
   public Mono<Object> sendBookingList(@PathVariable String channelName,
       @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate raidDate) {
-    return channelService.sendBookingList(Channel.valueOf(channelName), raidDate);
+    Channel targetChannel = Channel.valueOf(channelName);
+    String bookingListString = channelService.createBookingListString(targetChannel, raidDate);
+
+    return channelService.sendBookingList(targetChannel, bookingListString);
   }
 }

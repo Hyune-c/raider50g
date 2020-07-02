@@ -46,8 +46,8 @@ public class ChannelService {
     ).collect(Collectors.joining("\n"));
   }
 
-  protected String createBookingListString(Channel channel, LocalDate raidDate,
-      List<Booking> bookings) {
+  public String createBookingListString(Channel channel, LocalDate raidDate) {
+    List<Booking> bookings = bookingRepository.findAll(raidDate);
     return "```"
         + bookingListTitle(channel, raidDate, bookings.size())
         + "```"
@@ -56,7 +56,7 @@ public class ChannelService {
         + "```";
   }
 
-  public Mono<Object> sendBookingList(Channel channel, LocalDate raidDate) {
+  public Mono<Object> sendBookingList(Channel channel, String bookingListString) {
     URI uri = UriComponentsBuilder
         .fromHttpUrl(discordProperty.getApiUrl())
         .pathSegment("channels", "{channelId}", "messages")
@@ -67,8 +67,6 @@ public class ChannelService {
       headers.add(CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
     };
     Map<String, String> payloads = new HashMap<>();
-    String bookingListString = createBookingListString(channel, raidDate,
-        bookingRepository.findAll(raidDate));
     payloads.put("content", bookingListString);
 
     return WebClient.create()
