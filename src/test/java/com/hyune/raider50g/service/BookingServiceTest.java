@@ -43,7 +43,10 @@ public class BookingServiceTest {
     // given
     DungeonType dungeonType = DungeonType.BLACKWING;
     LocalDate raidDate = LocalDate.of(2020, 7, 5);
-    RaidInfo raidInfo = RaidInfo.of(dungeonType, raidDate);
+    RaidInfo raidInfo = RaidInfo.builder()
+        .dungeonType(dungeonType)
+        .raidDate(raidDate)
+        .build();
 
     ClassType classType = ClassType.DRUID;
     String raiderId = "드루티어는오십골";

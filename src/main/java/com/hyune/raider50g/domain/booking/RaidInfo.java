@@ -2,7 +2,6 @@ package com.hyune.raider50g.domain.booking;
 
 import com.hyune.raider50g.common.type.DungeonType;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
@@ -26,11 +25,4 @@ public class RaidInfo {
 
   @Column(nullable = false)
   private LocalDate raidDate;
-
-  public static RaidInfo of(DungeonType dungeonType, LocalDate raidDate) {
-    return RaidInfo.builder()
-        .dungeonType(dungeonType)
-        .raidDate(raidDate)
-        .build();
-  }
 }
