@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.hyune.raider50g.common.type.ClassType;
 import com.hyune.raider50g.common.type.DungeonType;
 import com.hyune.raider50g.domain.booking.Booking;
+import com.hyune.raider50g.domain.booking.BookingList;
 import com.hyune.raider50g.domain.booking.RaidInfo;
 import com.hyune.raider50g.domain.booking.Raider;
 import com.hyune.raider50g.domain.booking.dto.BookingCommand;
@@ -21,6 +22,22 @@ public class BookingServiceTest {
 
   @Autowired
   BookingService bookingService;
+
+  @DisplayName("예약 인원 리스트 만들기")
+  @Test
+  public void createBookingList() {
+    // given
+    DungeonType dungeonType = DungeonType.BLACKWING;
+    LocalDate raidDate = LocalDate.of(2020, 7, 5);
+
+    // when
+    BookingList bookingList = bookingService.createBookingList(dungeonType, raidDate);
+
+    // then
+    assertThat(bookingList.createBookingSheet())
+        .startsWith("```" + dungeonType.getName())
+        .contains("드루\t드루티어는오십골");
+  }
 
   @DisplayName("초대 매크로 만들기")
   @Test
