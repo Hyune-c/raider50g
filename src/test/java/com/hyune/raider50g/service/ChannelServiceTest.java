@@ -31,7 +31,7 @@ public class ChannelServiceTest {
     List<Booking> bookings = bookingRepository.findAll(raidDate);
 
     // when
-    String bookingList = channelService.createBookingList(channel, raidDate, bookings);
+    String bookingList = channelService.createBookingListString(channel, raidDate, bookings);
 
     System.out.println(bookingList);
     // then

@@ -1,5 +1,9 @@
 package com.hyune.raider50g.service;
 
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
+import static org.springframework.http.HttpHeaders.USER_AGENT;
+
 import com.google.gson.Gson;
 import com.hyune.raider50g.common.type.Channel;
 import com.hyune.raider50g.common.type.ClassType;
@@ -12,14 +16,15 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
+import reactor.core.publisher.Mono;
 
 @RequiredArgsConstructor
 @Service
@@ -41,7 +46,8 @@ public class ChannelService {
     ).collect(Collectors.joining("\n"));
   }
 
-  protected String createBookingList(Channel channel, LocalDate raidDate, List<Booking> bookings) {
+  protected String createBookingListString(Channel channel, LocalDate raidDate,
+      List<Booking> bookings) {
     return "```"
         + bookingListTitle(channel, raidDate, bookings.size())
         + "```"
@@ -50,25 +56,29 @@ public class ChannelService {
         + "```";
   }
 
-  public void sendBookingList(Channel channel, LocalDate raidDate) {
-    HttpHeaders headers = new HttpHeaders();
-    headers.setContentType(MediaType.APPLICATION_JSON);
-    headers.add("User-Agent", "PostmanRuntime/7.25.0");
-    headers.add("Authorization", "Bot " + discordProperty.getToken());
-
-    Map<String, String> payloads = new HashMap<>();
-    String bookingListString = createBookingList(channel, raidDate,
-        bookingRepository.findAll(raidDate));
-    payloads.put("content", bookingListString);
-
-    HttpEntity<String> request = new HttpEntity<>(new Gson().toJson(payloads), headers);
-
+  public Mono<Object> sendBookingList(Channel channel, LocalDate raidDate) {
     URI uri = UriComponentsBuilder
         .fromHttpUrl(discordProperty.getApiUrl())
         .pathSegment("channels", "{channelId}", "messages")
         .build(channel.getChannelId());
+    Consumer<HttpHeaders> headersConsumer = headers -> {
+      headers.add(AUTHORIZATION, "Bot " + discordProperty.getToken());
+      headers.add(USER_AGENT, "PostmanRuntime/7.25.0");
+      headers.add(CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+    };
+    Map<String, String> payloads = new HashMap<>();
+    String bookingListString = createBookingListString(channel, raidDate,
+        bookingRepository.findAll(raidDate));
+    payloads.put("content", bookingListString);
 
-    new RestTemplate().postForObject(uri.toString(), request, Object.class);
+    return WebClient.create()
+        .post()
+        .uri(uri)
+        .headers(headersConsumer)
+        .accept(MediaType.APPLICATION_JSON)
+        .bodyValue(new Gson().toJson(payloads))
+        .retrieve()
+        .bodyToMono(Object.class);
   }
 }
 
