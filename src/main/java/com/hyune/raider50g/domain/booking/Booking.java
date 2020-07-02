@@ -1,5 +1,6 @@
 package com.hyune.raider50g.domain.booking;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hyune.raider50g.common.type.ClassType;
 import com.hyune.raider50g.domain.booking.dto.BookingCommand;
 import java.io.Serializable;
@@ -42,10 +43,12 @@ public class Booking implements Serializable {
     raidInfo.cancel();
   }
 
+  @JsonIgnore
   public String getRaiderId() {
     return raider.getRaiderId();
   }
 
+  @JsonIgnore
   public ClassType getClassType() {
     return raider.getClassType();
   }
