@@ -33,14 +33,14 @@ public class ChannelService {
     Map<String, String> payloads = new HashMap<>();
     payloads.put("content", bookingList.createBookingSheet());
 
-    return postMessages(dungeonType, new Gson().toJson(payloads));
+    return postMessages(dungeonType.getChannelId(), new Gson().toJson(payloads));
   }
 
-  public Mono<Object> postMessages(DungeonType channel, String jsonBody) {
+  public Mono<Object> postMessages(String channelId, String jsonBody) {
     URI uri = UriComponentsBuilder
         .fromHttpUrl(discordProperty.getApiUrl())
         .pathSegment("channels", "{channelId}", "messages")
-        .build(channel.getChannelId());
+        .build(channelId);
     Consumer<HttpHeaders> headersConsumer = headers -> {
       headers.add(AUTHORIZATION, "Bot " + discordProperty.getToken());
       headers.add(USER_AGENT, "PostmanRuntime/7.25.0");
