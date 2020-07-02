@@ -1,6 +1,9 @@
 package com.hyune.raider50g.service;
 
+import com.hyune.raider50g.common.type.DungeonType;
 import com.hyune.raider50g.domain.booking.Booking;
+import com.hyune.raider50g.domain.booking.BookingList;
+import com.hyune.raider50g.domain.booking.RaidInfo;
 import com.hyune.raider50g.domain.booking.dto.BookingCommand;
 import com.hyune.raider50g.repository.BookingRepository;
 import java.time.LocalDate;
@@ -28,5 +31,16 @@ public class BookingService {
     return bookingRepository.findAll(findDate).stream()
         .map(booking -> booking.getRaider().inviteMacro())
         .collect(Collectors.joining("\n"));
+  }
+
+  public BookingList createBookingList(DungeonType dungeonType, LocalDate raidDate) {
+    RaidInfo raidInfo = RaidInfo.builder()
+        .dungeonType(dungeonType)
+        .raidDate(raidDate)
+        .build();
+    return BookingList.builder()
+        .raidInfo(raidInfo)
+        .bookings(bookingRepository.findAll(raidDate))
+        .build();
   }
 }

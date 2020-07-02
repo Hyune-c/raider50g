@@ -20,9 +20,8 @@ public class ChannelController {
   private final ChannelService channelService;
 
   @GetMapping("/{targetDungeon}")
-  public Mono<Object> sendBookingList(@PathVariable DungeonType targetDungeon,
+  public Mono<Object> postBookingList(@PathVariable DungeonType targetDungeon,
       @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate raidDate) {
-    String bookingListString = channelService.createBookingListString(targetDungeon, raidDate);
-    return channelService.sendBookingList(targetDungeon, bookingListString);
+    return channelService.postBookingList(targetDungeon, raidDate);
   }
 }
