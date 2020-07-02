@@ -2,7 +2,7 @@ package com.hyune.raider50g.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.hyune.raider50g.common.type.Channel;
+import com.hyune.raider50g.common.type.DungeonType;
 import java.time.LocalDate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,11 +20,11 @@ public class ChannelServiceTest {
   @Test
   public void makeBookingList() {
     // given
-    Channel channel = Channel.BLACKWING;
+    DungeonType dungeonType = DungeonType.BLACKWING;
     LocalDate raidDate = LocalDate.of(2020, 7, 5);
 
     // when
-    String bookingList = channelService.createBookingListString(channel, raidDate);
+    String bookingList = channelService.createBookingListString(dungeonType, raidDate);
 
     System.out.println(bookingList);
     // then

@@ -1,6 +1,6 @@
 package com.hyune.raider50g.web;
 
-import com.hyune.raider50g.common.type.Channel;
+import com.hyune.raider50g.common.type.DungeonType;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
@@ -34,9 +34,9 @@ public class ChannelControllerTest {
   public void sendBookingList() {
     System.out.println("asdf");
     // given
-    Channel channel = Channel.TEST;
+    DungeonType dungeonType = DungeonType.TEST;
     UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance()
-        .pathSegment("channels", channel.getKey())
+        .pathSegment("channels", dungeonType.getKey())
         .queryParam("raidDate", "2020-07-05");
 
     // when

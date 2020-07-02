@@ -5,8 +5,8 @@ import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
 import static org.springframework.http.HttpHeaders.USER_AGENT;
 
 import com.google.gson.Gson;
-import com.hyune.raider50g.common.type.Channel;
 import com.hyune.raider50g.common.type.ClassType;
+import com.hyune.raider50g.common.type.DungeonType;
 import com.hyune.raider50g.config.property.DiscordProperty;
 import com.hyune.raider50g.domain.booking.Booking;
 import com.hyune.raider50g.repository.BookingRepository;
@@ -33,7 +33,7 @@ public class ChannelService {
   private final BookingRepository bookingRepository;
   private final DiscordProperty discordProperty;
 
-  private String bookingListTitle(Channel channel, LocalDate raidDate, int raiderCount) {
+  private String bookingListTitle(DungeonType channel, LocalDate raidDate, int raiderCount) {
     return String.format("%s\t%s (일) PM 19:00\t%d/40", channel.getKey(), raidDate, raiderCount);
   }
 
@@ -46,7 +46,7 @@ public class ChannelService {
     ).collect(Collectors.joining("\n"));
   }
 
-  public String createBookingListString(Channel channel, LocalDate raidDate) {
+  public String createBookingListString(DungeonType channel, LocalDate raidDate) {
     List<Booking> bookings = bookingRepository.findAll(raidDate);
     return "```"
         + bookingListTitle(channel, raidDate, bookings.size())
@@ -56,7 +56,7 @@ public class ChannelService {
         + "```";
   }
 
-  public Mono<Object> sendBookingList(Channel channel, String bookingListString) {
+  public Mono<Object> sendBookingList(DungeonType channel, String bookingListString) {
     URI uri = UriComponentsBuilder
         .fromHttpUrl(discordProperty.getApiUrl())
         .pathSegment("channels", "{channelId}", "messages")

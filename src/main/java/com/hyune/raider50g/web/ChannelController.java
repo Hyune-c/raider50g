@@ -1,6 +1,6 @@
 package com.hyune.raider50g.web;
 
-import com.hyune.raider50g.common.type.Channel;
+import com.hyune.raider50g.common.type.DungeonType;
 import com.hyune.raider50g.service.ChannelService;
 import java.time.LocalDate;
 import lombok.RequiredArgsConstructor;
@@ -19,10 +19,10 @@ public class ChannelController {
 
   private final ChannelService channelService;
 
-  @GetMapping("/{targetChannel}")
-  public Mono<Object> sendBookingList(@PathVariable Channel targetChannel,
+  @GetMapping("/{targetDungeon}")
+  public Mono<Object> sendBookingList(@PathVariable DungeonType targetDungeon,
       @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate raidDate) {
-    String bookingListString = channelService.createBookingListString(targetChannel, raidDate);
-    return channelService.sendBookingList(targetChannel, bookingListString);
+    String bookingListString = channelService.createBookingListString(targetDungeon, raidDate);
+    return channelService.sendBookingList(targetDungeon, bookingListString);
   }
 }
