@@ -19,12 +19,10 @@ public class ChannelController {
 
   private final ChannelService channelService;
 
-  @GetMapping("/{channelName}")
-  public Mono<Object> sendBookingList(@PathVariable String channelName,
+  @GetMapping("/{targetChannel}")
+  public Mono<Object> sendBookingList(@PathVariable Channel targetChannel,
       @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate raidDate) {
-    Channel targetChannel = Channel.valueOf(channelName);
     String bookingListString = channelService.createBookingListString(targetChannel, raidDate);
-
     return channelService.sendBookingList(targetChannel, bookingListString);
   }
 }
