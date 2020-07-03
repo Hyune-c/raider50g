@@ -1,71 +1,60 @@
 package com.hyune.raider50g.service;
 
+import static org.springframework.http.HttpHeaders.AUTHORIZATION;
+import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
+import static org.springframework.http.HttpHeaders.USER_AGENT;
+
 import com.google.gson.Gson;
-import com.hyune.raider50g.common.type.Channel;
-import com.hyune.raider50g.common.type.ClassType;
+import com.hyune.raider50g.common.type.DungeonType;
 import com.hyune.raider50g.config.property.DiscordProperty;
-import com.hyune.raider50g.domain.booking.Booking;
-import com.hyune.raider50g.repository.BookingRepository;
+import com.hyune.raider50g.domain.booking.BookingList;
 import java.net.URI;
 import java.time.LocalDate;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.function.Consumer;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
+import reactor.core.publisher.Mono;
 
 @RequiredArgsConstructor
 @Service
 public class ChannelService {
 
-  private final BookingRepository bookingRepository;
   private final DiscordProperty discordProperty;
+  private final BookingService bookingService;
 
-  private String makeBookingList(Channel channel, LocalDate raidDate, List<Booking> bookings) {
-    StringBuilder sb = new StringBuilder();
+  public Mono<Object> postBookingList(DungeonType dungeonType, LocalDate raidDate) {
+    BookingList bookingList = bookingService.createBookingList(dungeonType, raidDate);
+    Map<String, String> payloads = new HashMap<>();
+    payloads.put("content", bookingList.createBookingSheet());
 
-    String title = "```" + channel.getKey() + "\t" + raidDate + " (일) PM 19:00 \t" + bookings.size()
-        + "/40```";
-    sb.append(title);
-
-    sb.append("```");
-    for (ClassType classType : ClassType.values()) {
-      sb.append(classType.getNames().get(0)).append("\t");
-      sb.append(bookings.stream()
-          .filter(booking -> classType.equals(booking.getRaider().getClassType()))
-          .map(booking -> booking.getRaider().getRaiderId())
-          .collect(Collectors.joining("\t")));
-      sb.append("\n");
-    }
-    sb.append("```");
-
-    return sb.toString();
+    return postMessages(dungeonType.getChannelId(), new Gson().toJson(payloads));
   }
 
-  public void sendBookingList(Channel channel, LocalDate raidDate) {
-    HttpHeaders headers = new HttpHeaders();
-    headers.setContentType(MediaType.APPLICATION_JSON);
-    headers.add("User-Agent", "PostmanRuntime/7.25.0");
-    headers.add("Authorization", "Bot " + discordProperty.getToken());
-
-    Map<String, String> payloads = new HashMap<>();
-    String bookingListString = makeBookingList(channel, raidDate, bookingRepository.findAll(raidDate));
-    payloads.put("content", bookingListString);
-
-    HttpEntity<String> request = new HttpEntity<>(new Gson().toJson(payloads), headers);
-
+  public Mono<Object> postMessages(String channelId, String jsonBody) {
     URI uri = UriComponentsBuilder
         .fromHttpUrl(discordProperty.getApiUrl())
         .pathSegment("channels", "{channelId}", "messages")
-        .build(channel.getChannelId());
+        .build(channelId);
+    Consumer<HttpHeaders> headersConsumer = headers -> {
+      headers.add(AUTHORIZATION, "Bot " + discordProperty.getToken());
+      headers.add(USER_AGENT, "PostmanRuntime/7.25.0");
+      headers.add(CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+    };
 
-    new RestTemplate().postForObject(uri.toString(), request, Object.class);
+    return WebClient.create()
+        .post()
+        .uri(uri)
+        .headers(headersConsumer)
+        .accept(MediaType.APPLICATION_JSON)
+        .bodyValue(jsonBody)
+        .retrieve()
+        .bodyToMono(Object.class);
   }
 }
 

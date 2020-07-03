@@ -1,11 +1,11 @@
 package com.hyune.raider50g.web;
 
-import com.hyune.raider50g.util.JsonUtil;
+import com.hyune.raider50g.common.type.ClassType;
+import com.hyune.raider50g.common.type.DungeonType;
 import com.hyune.raider50g.domain.booking.RaidInfo;
 import com.hyune.raider50g.domain.booking.Raider;
 import com.hyune.raider50g.domain.booking.dto.BookingCommand;
-import com.hyune.raider50g.common.type.ClassType;
-import com.hyune.raider50g.common.type.DungeonType;
+import com.hyune.raider50g.util.JsonUtil;
 import java.time.LocalDate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,7 +30,10 @@ class BookingControllerTest {
     // given
     DungeonType dungeonType = DungeonType.BLACKWING;
     LocalDate raidDate = LocalDate.now().plusDays(7);
-    RaidInfo raidInfo = RaidInfo.of(dungeonType, raidDate);
+    RaidInfo raidInfo = RaidInfo.builder()
+        .dungeonType(dungeonType)
+        .raidDate(raidDate)
+        .build();
 
     ClassType classType = ClassType.DRUID;
     String raiderId = "드루티어는오십골";

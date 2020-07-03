@@ -1,7 +1,11 @@
 package com.hyune.raider50g.domain.booking;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.hyune.raider50g.common.type.ClassType;
 import com.hyune.raider50g.domain.booking.dto.BookingCommand;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,6 +28,14 @@ public class Booking implements Serializable {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Builder.Default
+  @Column(nullable = false)
+  private Boolean cancel = false;
+
+  @Builder.Default
+  @Column(nullable = false)
+  private LocalDateTime createdAt = LocalDateTime.now();
+
   @Embedded
   private RaidInfo raidInfo;
 
@@ -38,6 +50,20 @@ public class Booking implements Serializable {
   }
 
   public void cancel() {
-    raidInfo.cancel();
+    if (cancel) {
+      throw new RuntimeException("이미 취소된 예약 입니다");
+    }
+
+    cancel = true;
+  }
+
+  @JsonIgnore
+  public String getRaiderId() {
+    return raider.getRaiderId();
+  }
+
+  @JsonIgnore
+  public ClassType getClassType() {
+    return raider.getClassType();
   }
 }

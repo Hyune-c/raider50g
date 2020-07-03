@@ -22,6 +22,10 @@ public class QBooking extends EntityPathBase<Booking> {
 
     public static final QBooking booking = new QBooking("booking");
 
+    public final BooleanPath cancel = createBoolean("cancel");
+
+    public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     public final QRaider raider;
