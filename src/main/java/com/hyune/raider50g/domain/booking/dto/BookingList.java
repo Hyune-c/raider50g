@@ -1,8 +1,11 @@
 package com.hyune.raider50g.domain.booking.dto;
 
+import com.hyune.raider50g.common.type.ClassType;
 import com.hyune.raider50g.domain.booking.Booking;
 import com.hyune.raider50g.domain.booking.RaidInfo;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,7 +18,7 @@ import org.springframework.util.MultiValueMap;
 public class BookingList {
 
   private RaidInfo raidInfo;
-  private MultiValueMap<String, String> bookingsSheet;
+  private MultiValueMap<String, String> bookingsMap;
 
   public static BookingList of(RaidInfo raidInfo, List<Booking> bookings) {
     MultiValueMap<String, String> bookingsMap = new LinkedMultiValueMap<>();
@@ -24,17 +27,15 @@ public class BookingList {
 
     return BookingList.builder()
         .raidInfo(raidInfo)
-        .bookingsSheet(bookingsMap)
+        .bookingsMap(bookingsMap)
         .build();
   }
 
-  public int bookingCount() {
-    int result = 0;
-    for (String key : bookingsSheet.keySet()) {
-      result += bookingsSheet.get(key).size();
-    }
-
-    return result;
+  public Integer bookingCount() {
+    return bookingsMap.keySet().stream()
+        .map(key -> bookingsMap.get(key).size())
+        .reduce(Integer::sum)
+        .orElse(0);
   }
 
   public String getTitle() {
@@ -45,15 +46,21 @@ public class BookingList {
   }
 
   public String getContents() {
-    StringBuilder sb = new StringBuilder();
+    // 예약된 인원이 존재하는 직업을 String 화 합니다
+    String existClass = bookingsMap.keySet().stream()
+        .map(key -> bookingsMap.get(key).stream()
+            .collect(Collectors.joining("\t", key + " " + bookingsMap.get(key).size() + "\t", "")))
+        .collect(Collectors.joining("\n", "", "\n"));
 
-    for (String key : bookingsSheet.keySet()) {
-      sb.append(key + " " + bookingsSheet.get(key).size() + "\t");
-      bookingsSheet.get(key).forEach(raiderName -> sb.append(raiderName + "\t"));
-      sb.append("\n");
-    }
+    // 예약된 인원이 존재하지 않는 직업을 String 화 합니다
+    String notExistClass = (ClassType.values().length == bookingsMap.size())
+        ? ""
+        : Arrays.stream(ClassType.values())
+            .map(ClassType::getName)
+            .filter(className -> !bookingsMap.containsKey(className))
+            .collect(Collectors.joining(" 0 \n", "", " 0 \n"));
 
-    return sb.toString();
+    return existClass + notExistClass;
   }
 
   public String createBookingSheet() {
