@@ -46,7 +46,7 @@ public class BookingList {
         // 예약이 있는 직업군이면
         : classListMap.get(key).stream().collect(Collectors.joining(
             "\t",
-            String.format("%s (%d/%d)", key.getName(), classListMap.get(key).size(),
+            String.format("%s (%d/%d)\t", key.getName(), classListMap.get(key).size(),
                 key.getMaxCount()),
             ""));
   }
