@@ -7,10 +7,13 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ClassType {
 
-  DRUID("DRUID", "드루"), HUNTER("HUNTER", "냥꾼"), MAGE("MAGE", "법사"), PRIEST("PRIEST", "사제"), ROUGE(
-      "ROUGE", "도적"), SHAMAN("SHAMAN", "술사"), WARLOCK("WARLOCK", "흑마"), WARRIOR_DEALER(
-      "WARRIOR_DEALER", "딜전"), WARRIOR_TANK("WARRIOR_TANK", "탱전");
+  DRUID("DRUID", "드루", 2, 3), HUNTER("HUNTER", "냥꾼", 4, 4), MAGE("MAGE", "법사", 6, 8), PRIEST(
+      "PRIEST", "사제", 4, 5), ROUGE("ROUGE", "도적", 4, 6), SHAMAN("SHAMAN", "술사", 4, 6), WARLOCK(
+      "WARLOCK", "흑마", 2, 4), WARRIOR_DEALER("WARRIOR_DEALER", "딜전", 4, 6), WARRIOR_TANK(
+      "WARRIOR_TANK", "탱전", 2, 3);
 
   private final String key;
   private final String name;
+  private final int minCount;
+  private final int maxCount;
 }
