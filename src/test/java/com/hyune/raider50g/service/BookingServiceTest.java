@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.hyune.raider50g.common.type.ClassType;
 import com.hyune.raider50g.common.type.DungeonType;
 import com.hyune.raider50g.domain.booking.Booking;
-import com.hyune.raider50g.domain.booking.BookingList;
+import com.hyune.raider50g.domain.booking.dto.BookingList;
 import com.hyune.raider50g.domain.booking.RaidInfo;
 import com.hyune.raider50g.domain.booking.Raider;
 import com.hyune.raider50g.domain.booking.dto.BookingCommand;
@@ -36,7 +36,7 @@ public class BookingServiceTest {
     // then
     assertThat(bookingList.createBookingSheet())
         .startsWith("```" + dungeonType.getName())
-        .contains("드루\t드루티어는오십골");
+        .contains("드루티어는오십골");
   }
 
   @DisplayName("초대 매크로 만들기")
