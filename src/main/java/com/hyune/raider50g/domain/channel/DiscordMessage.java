@@ -1,6 +1,7 @@
 package com.hyune.raider50g.domain.channel;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -40,11 +41,13 @@ public class DiscordMessage implements Message {
 
   private String content;
   private User author;
+  private LocalDateTime createdAt;
 
-  public static DiscordMessage of(String content, DiscordUser user) {
+  public static DiscordMessage of(String content, DiscordUser user, LocalDateTime createdAt) {
     return DiscordMessage.builder()
         .content(content)
         .author(user)
+        .createdAt(createdAt)
         .build();
   }
 

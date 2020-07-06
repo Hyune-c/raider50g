@@ -12,6 +12,8 @@ import com.hyune.raider50g.domain.channel.DiscordMessage;
 import com.hyune.raider50g.domain.channel.DiscordUser;
 import java.net.URI;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -95,10 +97,14 @@ public class ChannelService {
     // Discord API 에서 온 응답을 파싱합니다
     discordMessages = response.stream()
         .map(obj -> {
+          String content = obj.get("content").toString();
           LinkedHashMap<String, Object> objAuthor =
               (LinkedHashMap<String, Object>) obj.get("author");
           DiscordUser discordUser = DiscordUser.of(objAuthor.get("username").toString());
-          return DiscordMessage.of(obj.get("content").toString(), discordUser);
+          LocalDateTime createdAt = LocalDateTime
+              .parse(obj.get("timestamp").toString(), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+
+          return DiscordMessage.of(content, discordUser, createdAt);
         })
         .collect(Collectors.toList());
 
