@@ -13,4 +13,5 @@ public class DiscordProperty {
 
   private String token;
   private String apiUrl;
+  private String userAgent;
 }

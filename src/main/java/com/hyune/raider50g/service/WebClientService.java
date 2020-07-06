@@ -35,7 +35,7 @@ public class WebClientService {
     this.webClient = webClientBuilder.baseUrl(discordProperty.getApiUrl()).build();
     this.headersConsumer = headers -> {
       headers.add(AUTHORIZATION, "Bot " + discordProperty.getToken());
-      headers.add(USER_AGENT, "PostmanRuntime/7.25.0");
+      headers.add(USER_AGENT, discordProperty.getUserAgent());
       headers.add(CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
     };
   }
@@ -75,7 +75,7 @@ public class WebClientService {
         .queryParam("limit", limit)
         .build(channelId));
 
-    Mono<ArrayList> clientResponse = WebClient.create()
+    Mono<ArrayList> clientResponse = webClient
         .get()
         .uri(uriFunction)
         .headers(headersConsumer)
