@@ -15,41 +15,39 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import org.javacord.api.entity.user.User;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.util.UriComponentsBuilder;
+import org.springframework.web.util.UriBuilder;
 import reactor.core.publisher.Mono;
 
 @Service
 public class WebClientService {
 
   private final WebClient webClient;
-  private final DiscordProperty discordProperty;
+  private final Consumer<HttpHeaders> headersConsumer;
 
   public WebClientService(WebClient.Builder webClientBuilder, DiscordProperty discordProperty) {
-    this.webClient = webClientBuilder.baseUrl("").build();
-    this.discordProperty = discordProperty;
-  }
-
-
-  public Mono<Object> postMessages(String channelId, String jsonBody) {
-    URI uri = UriComponentsBuilder
-        .fromHttpUrl(discordProperty.getApiUrl())
-        .pathSegment("channels", "{channelId}", "messages")
-        .build(channelId);
-    Consumer<HttpHeaders> headersConsumer = headers -> {
+    this.webClient = webClientBuilder.baseUrl(discordProperty.getApiUrl()).build();
+    this.headersConsumer = headers -> {
       headers.add(AUTHORIZATION, "Bot " + discordProperty.getToken());
       headers.add(USER_AGENT, "PostmanRuntime/7.25.0");
       headers.add(CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
     };
+  }
+
+  public Mono<Object> postMessages(String channelId, String jsonBody) {
+    Function<UriBuilder, URI> uriFunction = (uriBuilder -> uriBuilder
+        .pathSegment("channels", "{channelId}", "messages")
+        .build(channelId));
 
     return webClient
         .post()
-        .uri(uri)
+        .uri(uriFunction)
         .headers(headersConsumer)
         .accept(MediaType.APPLICATION_JSON)
         .bodyValue(jsonBody)
@@ -58,20 +56,14 @@ public class WebClientService {
   }
 
   public List<DiscordMessage> getMessages(String channelId, int limit, String findAuthor) {
-    URI uri = UriComponentsBuilder
-        .fromHttpUrl(discordProperty.getApiUrl())
+    Function<UriBuilder, URI> uriFunction = (uriBuilder -> uriBuilder
         .pathSegment("channels", "{channelId}", "messages")
         .queryParam("limit", limit)
-        .build(channelId);
-    Consumer<HttpHeaders> headersConsumer = headers -> {
-      headers.add(AUTHORIZATION, "Bot " + discordProperty.getToken());
-      headers.add(USER_AGENT, "PostmanRuntime/7.25.0");
-      headers.add(CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-    };
+        .build(channelId));
 
     Mono<ArrayList> clientResponse = WebClient.create()
         .get()
-        .uri(uri)
+        .uri(uriFunction)
         .headers(headersConsumer)
         .accept(MediaType.APPLICATION_JSON)
         .retrieve()
