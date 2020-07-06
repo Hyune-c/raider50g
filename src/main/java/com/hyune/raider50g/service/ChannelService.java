@@ -21,6 +21,7 @@ import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.javacord.api.entity.user.User;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
@@ -64,7 +65,7 @@ public class ChannelService {
         .bodyToMono(Object.class);
   }
 
-  public List<DiscordMessage> getMessages(String channelId, int limit, String author) {
+  public List<DiscordMessage> getMessages(String channelId, int limit, String findAuthor) {
     URI uri = UriComponentsBuilder
         .fromHttpUrl(discordProperty.getApiUrl())
         .pathSegment("channels", "{channelId}", "messages")
@@ -85,24 +86,30 @@ public class ChannelService {
         .bodyToMono(ArrayList.class);
 
     ArrayList<LinkedHashMap<String, Object>> response = clientResponse.block();
+    List<DiscordMessage> discordMessages = new ArrayList<>();
+
+    if (Objects.isNull(response)) {
+      return discordMessages;
+    }
 
     // Discord API 에서 온 응답을 파싱합니다
-    List<DiscordMessage> discordMessages = (Objects.isNull(response))
-        ? null
-        : response.stream()
-            .map(obj -> {
-              LinkedHashMap<String, Object> objAuthor = (LinkedHashMap<String, Object>) obj
-                  .get("author");
-              DiscordUser discordUser = DiscordUser.of(objAuthor.get("username").toString());
-              return DiscordMessage.of(obj.get("content").toString(), discordUser);
-            })
-            .collect(Collectors.toList());
+    discordMessages = response.stream()
+        .map(obj -> {
+          LinkedHashMap<String, Object> objAuthor =
+              (LinkedHashMap<String, Object>) obj.get("author");
+          DiscordUser discordUser = DiscordUser.of(objAuthor.get("username").toString());
+          return DiscordMessage.of(obj.get("content").toString(), discordUser);
+        })
+        .collect(Collectors.toList());
 
     // author 파라미터가 있는 경우 filter 한 메세지를 리턴합니다
-    return (Objects.isNull(author) || Objects.isNull(discordMessages))
+    return (Objects.isNull(findAuthor))
         ? discordMessages
         : discordMessages.stream()
-            .filter(message -> author.equals(message.getAuthorUser().getUserName()))
+            .filter(message -> {
+              User messageAuthor = message.getUserAuthor().orElseGet(DiscordUser::new);
+              return messageAuthor.getName().equals(findAuthor);
+            })
             .collect(Collectors.toList());
   }
 }

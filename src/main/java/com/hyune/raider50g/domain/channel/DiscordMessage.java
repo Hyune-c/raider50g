@@ -39,12 +39,12 @@ import org.javacord.api.util.event.ListenerManager;
 public class DiscordMessage implements Message {
 
   private String content;
-  private DiscordUser authorUser;
+  private User author;
 
   public static DiscordMessage of(String content, DiscordUser user) {
     return DiscordMessage.builder()
         .content(content)
-        .authorUser(user)
+        .author(user)
         .build();
   }
 
@@ -100,7 +100,7 @@ public class DiscordMessage implements Message {
 
   @Override
   public Optional<User> getUserAuthor() {
-    return Optional.empty();
+    return Optional.ofNullable(author);
   }
 
   @Override

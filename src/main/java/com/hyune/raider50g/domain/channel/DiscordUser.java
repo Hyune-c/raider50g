@@ -9,6 +9,7 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.javacord.api.DiscordApi;
 import org.javacord.api.entity.DiscordClient;
 import org.javacord.api.entity.Icon;
@@ -51,13 +52,14 @@ import org.javacord.api.util.event.ListenerManager;
 @Getter
 @Builder
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 public class DiscordUser implements User {
 
-  private String userName;
+  private String name;
 
-  public static DiscordUser of(String userName) {
+  public static DiscordUser of(String name) {
     return DiscordUser.builder()
-        .userName(userName)
+        .name(name)
         .build();
   }
 
@@ -118,7 +120,7 @@ public class DiscordUser implements User {
 
   @Override
   public String getName() {
-    return null;
+    return name;
   }
 
   @Override
