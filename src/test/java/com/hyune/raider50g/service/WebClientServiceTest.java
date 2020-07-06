@@ -46,8 +46,8 @@ public class WebClientServiceTest {
 
       // then
       Assertions.assertThat(discordMessages)
-          .hasSizeGreaterThan(0)
-          .hasSizeLessThan(50);
+          .hasSizeGreaterThanOrEqualTo(0)
+          .hasSizeLessThanOrEqualTo(50);
     }
   }
 }
