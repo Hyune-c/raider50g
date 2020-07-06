@@ -55,6 +55,20 @@ public class WebClientService {
         .bodyToMono(Object.class);
   }
 
+  public Mono<Object> deleteMessages(String channelId, long messageId) {
+    Function<UriBuilder, URI> uriFunction = (uriBuilder -> uriBuilder
+        .pathSegment("channels", "{channelId}", "messages", "{messageId}")
+        .build(channelId, messageId));
+
+    return webClient
+        .delete()
+        .uri(uriFunction)
+        .headers(headersConsumer)
+        .accept(MediaType.APPLICATION_JSON)
+        .retrieve()
+        .bodyToMono(Object.class);
+  }
+
   public List<DiscordMessage> getMessages(String channelId, int limit, String findAuthor) {
     Function<UriBuilder, URI> uriFunction = (uriBuilder -> uriBuilder
         .pathSegment("channels", "{channelId}", "messages")
