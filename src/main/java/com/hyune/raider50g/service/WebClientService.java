@@ -14,11 +14,9 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import org.javacord.api.entity.user.User;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -29,15 +27,16 @@ import reactor.core.publisher.Mono;
 public class WebClientService {
 
   private final WebClient webClient;
-  private final Consumer<HttpHeaders> headersConsumer;
 
   public WebClientService(WebClient.Builder webClientBuilder, DiscordProperty discordProperty) {
-    this.webClient = webClientBuilder.baseUrl(discordProperty.getApiUrl()).build();
-    this.headersConsumer = headers -> {
-      headers.add(AUTHORIZATION, "Bot " + discordProperty.getToken());
-      headers.add(USER_AGENT, discordProperty.getUserAgent());
-      headers.add(CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
-    };
+    this.webClient = webClientBuilder
+        .baseUrl(discordProperty.getApiUrl())
+        .defaultHeaders(headers -> {
+          headers.add(AUTHORIZATION, "Bot " + discordProperty.getToken());
+          headers.add(USER_AGENT, discordProperty.getUserAgent());
+          headers.add(CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
+        })
+        .build();
   }
 
   public Mono<Object> postMessages(String channelId, String jsonBody) {
@@ -48,7 +47,6 @@ public class WebClientService {
     return webClient
         .post()
         .uri(uriFunction)
-        .headers(headersConsumer)
         .accept(MediaType.APPLICATION_JSON)
         .bodyValue(jsonBody)
         .retrieve()
@@ -63,7 +61,6 @@ public class WebClientService {
     return webClient
         .delete()
         .uri(uriFunction)
-        .headers(headersConsumer)
         .accept(MediaType.APPLICATION_JSON)
         .retrieve()
         .bodyToMono(Object.class);
@@ -78,7 +75,6 @@ public class WebClientService {
     Mono<ArrayList> clientResponse = webClient
         .get()
         .uri(uriFunction)
-        .headers(headersConsumer)
         .accept(MediaType.APPLICATION_JSON)
         .retrieve()
         .bodyToMono(ArrayList.class);
