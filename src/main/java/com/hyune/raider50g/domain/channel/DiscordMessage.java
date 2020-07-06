@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -39,7 +38,7 @@ import org.javacord.api.util.event.ListenerManager;
 @AllArgsConstructor
 public class DiscordMessage implements Message {
 
-  private String id;
+  private long id;
   private String content;
   private User author;
   private LocalDateTime createdAt;
@@ -176,7 +175,7 @@ public class DiscordMessage implements Message {
 
   @Override
   public long getId() {
-    return 0;
+    return id;
   }
 
   @Override

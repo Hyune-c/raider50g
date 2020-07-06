@@ -32,7 +32,6 @@ public class ChannelControllerTest {
   @DisplayName("예약 리스트 보내기")
   @Test
   public void sendBookingList() {
-    System.out.println("asdf");
     // given
     DungeonType dungeonType = DungeonType.TEST;
     UriComponentsBuilder uriComponentsBuilder = UriComponentsBuilder.newInstance()

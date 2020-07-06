@@ -10,12 +10,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@DisplayName("Channel : Service")
+@DisplayName("WebClient : Service")
 @SpringBootTest
-public class ChannelServiceTest {
+public class WebClientServiceTest {
 
   @Autowired
-  ChannelService channelService;
+  WebClientService webClientService;
 
   @Nested
   @DisplayName("채널에서 메세지들 가져오기")
@@ -27,7 +27,7 @@ public class ChannelServiceTest {
       // given
 
       // when
-      List<DiscordMessage> discordMessages = channelService
+      List<DiscordMessage> discordMessages = webClientService
           .getMessages(DungeonType.TEST.getChannelId(), 50, null);
 
       // then
@@ -41,7 +41,7 @@ public class ChannelServiceTest {
       // given
 
       // when
-      List<DiscordMessage> discordMessages = channelService
+      List<DiscordMessage> discordMessages = webClientService
           .getMessages(DungeonType.TEST.getChannelId(), 50, "50G BOT");
 
       // then
