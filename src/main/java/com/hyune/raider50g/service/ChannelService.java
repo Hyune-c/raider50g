@@ -97,6 +97,7 @@ public class ChannelService {
     // Discord API 에서 온 응답을 파싱합니다
     discordMessages = response.stream()
         .map(obj -> {
+          String id = obj.get("id").toString();
           String content = obj.get("content").toString();
           LinkedHashMap<String, Object> objAuthor =
               (LinkedHashMap<String, Object>) obj.get("author");
@@ -104,7 +105,7 @@ public class ChannelService {
           LocalDateTime createdAt = LocalDateTime
               .parse(obj.get("timestamp").toString(), DateTimeFormatter.ISO_OFFSET_DATE_TIME);
 
-          return DiscordMessage.of(content, discordUser, createdAt);
+          return new DiscordMessage(id, content, discordUser, createdAt);
         })
         .collect(Collectors.toList());
 

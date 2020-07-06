@@ -36,20 +36,13 @@ import org.javacord.api.util.event.ListenerManager;
 
 @Getter
 @Builder
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor
 public class DiscordMessage implements Message {
 
+  private String id;
   private String content;
   private User author;
   private LocalDateTime createdAt;
-
-  public static DiscordMessage of(String content, DiscordUser user, LocalDateTime createdAt) {
-    return DiscordMessage.builder()
-        .content(content)
-        .author(user)
-        .createdAt(createdAt)
-        .build();
-  }
 
   @Override
   public Optional<Instant> getLastEditTimestamp() {
