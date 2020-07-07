@@ -5,10 +5,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import com.hyune.raider50g.common.type.ClassType;
 import com.hyune.raider50g.common.type.DungeonType;
 import com.hyune.raider50g.domain.booking.Booking;
-import com.hyune.raider50g.domain.booking.dto.BookingList;
 import com.hyune.raider50g.domain.booking.RaidInfo;
 import com.hyune.raider50g.domain.booking.Raider;
 import com.hyune.raider50g.domain.booking.dto.BookingCommand;
+import com.hyune.raider50g.domain.booking.dto.BookingList;
 import java.time.LocalDate;
 import javax.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
@@ -44,13 +44,15 @@ public class BookingServiceTest {
   public void makeInviteMacro() {
     // given
     LocalDate findDate = LocalDate.of(2020, 7, 5);
+    String exceptUserName = "드루티어는오십골";
 
     // when
-    String inviteMacro = bookingService.makeInviteMacro(findDate);
+    String inviteMacro = bookingService.makeInviteMacro(findDate, exceptUserName);
 
     // then
     assertThat(inviteMacro)
-        .contains("/초대 ");
+        .contains("/초대 ")
+        .doesNotContain("드루티어는오십골");
   }
 
   @DisplayName("취소하기")

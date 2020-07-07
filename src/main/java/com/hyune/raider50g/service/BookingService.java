@@ -27,8 +27,9 @@ public class BookingService {
     return bookingRepository.cancel(findBooking);
   }
 
-  public String makeInviteMacro(LocalDate findDate) {
+  public String makeInviteMacro(LocalDate findDate, String exceptUserName) {
     return bookingRepository.findAll(findDate).stream()
+        .filter(booking -> !exceptUserName.equals(booking.getRaiderId()))
         .map(booking -> booking.getRaider().inviteMacro())
         .collect(Collectors.joining("\n"));
   }
