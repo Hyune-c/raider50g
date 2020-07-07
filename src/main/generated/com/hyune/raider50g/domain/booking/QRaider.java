@@ -21,7 +21,7 @@ public class QRaider extends BeanPath<Raider> {
 
     public final EnumPath<com.hyune.raider50g.common.type.ClassType> classType = createEnum("classType", com.hyune.raider50g.common.type.ClassType.class);
 
-    public final StringPath raiderId = createString("raiderId");
+    public final StringPath userName = createString("userName");
 
     public QRaider(String variable) {
         super(Raider.class, forVariable(variable));

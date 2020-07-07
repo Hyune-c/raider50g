@@ -68,10 +68,10 @@ public class BookingServiceTest {
         .build();
 
     ClassType classType = ClassType.DRUID;
-    String raiderId = "드루티어는오십골";
+    String userName = "드루티어는오십골";
     Raider raider = Raider.builder()
         .classType(classType)
-        .raiderId(raiderId)
+        .userName(userName)
         .build();
 
     BookingCommand bookingCommand = BookingCommand.builder()

@@ -24,7 +24,7 @@ public class BookingList {
   public static BookingList of(RaidInfo raidInfo, List<Booking> bookings) {
     MultiValueMap<ClassType, String> classListMap = new LinkedMultiValueMap<>();
     bookings.forEach(
-        booking -> classListMap.add(booking.getClassType(), booking.getRaiderId()));
+        booking -> classListMap.add(booking.getClassType(), booking.getUserName()));
 
     return BookingList.builder()
         .raidInfo(raidInfo)

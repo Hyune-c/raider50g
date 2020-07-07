@@ -23,13 +23,13 @@ public class BookingService {
 
   public Booking cancelBooking(BookingCommand bookingCommand) {
     Booking findBooking = bookingRepository.findOne(bookingCommand.getRaidInfo().getRaidDate()
-        , bookingCommand.getRaider().getRaiderId());
+        , bookingCommand.getRaider().getUserName());
     return bookingRepository.cancel(findBooking);
   }
 
   public String makeInviteMacro(LocalDate findDate, String exceptUserName) {
     return bookingRepository.findAll(findDate).stream()
-        .filter(booking -> !exceptUserName.equals(booking.getRaiderId()))
+        .filter(booking -> !exceptUserName.equals(booking.getUserName()))
         .map(booking -> booking.getRaider().inviteMacro())
         .collect(Collectors.joining("\n"));
   }

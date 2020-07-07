@@ -29,13 +29,13 @@ public class BookingRepository {
     return cancelBooking;
   }
 
-  public Booking findOne(LocalDate findDate, String raiderId) {
+  public Booking findOne(LocalDate findDate, String findUserName) {
     JPAQueryFactory queryFactory = new JPAQueryFactory(em);
     QBooking booking = QBooking.booking;
 
     return queryFactory.selectFrom(booking)
         .where(booking.raidInfo.raidDate.eq(findDate)
-            , booking.raider.raiderId.eq(raiderId))
+            , booking.raider.userName.eq(findUserName))
         .fetchOne();
   }
 

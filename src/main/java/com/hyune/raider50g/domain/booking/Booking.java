@@ -58,8 +58,8 @@ public class Booking implements Serializable {
   }
 
   @JsonIgnore
-  public String getRaiderId() {
-    return raider.getRaiderId();
+  public String getUserName() {
+    return raider.getUserName();
   }
 
   @JsonIgnore
