@@ -36,7 +36,7 @@ public class BookingController {
   @GetMapping("/invite-macro")
   public String makeInviteMacro(
       @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate raidDate,
-      @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") String exceptUserName) {
+      @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") String exceptUserName) {
     return bookingService.makeInviteMacro(raidDate, exceptUserName);
   }
 }
