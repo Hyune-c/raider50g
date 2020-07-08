@@ -23,9 +23,9 @@ public class Raider {
   private ClassType classType;
 
   @Column(nullable = false)
-  private String raiderId;
+  private String userName;
 
   public String inviteMacro() {
-    return "/초대 " + raiderId;
+    return "/초대 " + userName;
   }
 }

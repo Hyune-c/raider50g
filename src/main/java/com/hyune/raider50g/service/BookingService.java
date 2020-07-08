@@ -2,9 +2,9 @@ package com.hyune.raider50g.service;
 
 import com.hyune.raider50g.common.type.DungeonType;
 import com.hyune.raider50g.domain.booking.Booking;
-import com.hyune.raider50g.domain.booking.dto.BookingList;
 import com.hyune.raider50g.domain.booking.RaidInfo;
 import com.hyune.raider50g.domain.booking.dto.BookingCommand;
+import com.hyune.raider50g.domain.booking.dto.BookingList;
 import com.hyune.raider50g.repository.BookingRepository;
 import java.time.LocalDate;
 import java.util.stream.Collectors;
@@ -23,12 +23,13 @@ public class BookingService {
 
   public Booking cancelBooking(BookingCommand bookingCommand) {
     Booking findBooking = bookingRepository.findOne(bookingCommand.getRaidInfo().getRaidDate()
-        , bookingCommand.getRaider().getRaiderId());
+        , bookingCommand.getRaider().getUserName());
     return bookingRepository.cancel(findBooking);
   }
 
-  public String makeInviteMacro(LocalDate findDate) {
+  public String makeInviteMacro(LocalDate findDate, String exceptUserName) {
     return bookingRepository.findAll(findDate).stream()
+        .filter(booking -> !booking.getUserName().equals(exceptUserName))
         .map(booking -> booking.getRaider().inviteMacro())
         .collect(Collectors.joining("\n"));
   }
