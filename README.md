@@ -1,6 +1,8 @@
 # raider50g
 Managing 50G raiders discord
 
+[Work Log](https://github.com/Hyune-c/TIL/tree/master/Toy%20Project/Raider50G)
+ 
 ## 왜 만들어야 하는가 ?
 
 저는 여가 생활 중 하나로 WOW Classic 를 즐기고 있습니다  
