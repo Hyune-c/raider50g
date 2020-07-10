@@ -6,7 +6,7 @@ Managing 50G raiders discord
 ## 왜 만들어야 하는가 ?
 
 저는 여가 생활 중 하나로 WOW Classic 를 즐기고 있습니다  
-여러 가지 콘텐츠 중 공대장으로서 레이드를 제일 즐기고 있지만, 40명 +@ 에 달하는 인력과 일정 관리를 Discord 와 Google Spreadsheet 로 혼자 처리하고 있고 이 과정에서 누락의 위험성과 낮은 생산성의 작업이 반복되고 있습니다
+여러 가지 콘텐츠 중 공대장으로서 레이드를 제일 즐기고 있지만, 40명 +@ 에 달하는 인력과 일정 관리를 Discord 와 Google SpreadSheet 로 혼자 처리하고 있고 이 과정에서 누락의 위험성과 낮은 생산성의 작업이 반복되고 있습니다
 
 이를 위해 본섭은 인 게임의 `달력`을 지원하지만, Classic 은 지원되지 않습니다
 
@@ -27,7 +27,7 @@ Managing 50G raiders discord
 `=if(B2="", "", "/초대 " &B2)`
 
 - 접속 여부가 불분명한 40명의 인원을 반복적으로 확인하며 초대하고 있습니다
-- 기록된 Spreadsheet 를 기반으로 초대 매크로를 만들어 사용하고 있습니다
+- 기록된 SpreadSheet 를 기반으로 초대 매크로를 만들어 사용하고 있습니다
 
 ---
 
@@ -68,9 +68,9 @@ Managing 50G raiders discord
   - Discord API 사용
   - OAuth2 를 이용한 인증
   - Web MVC 를 이용한 API 제공
+  - WebFlux 
   - JPA, queryDSL 을 활용한 영속성 관리
 - heroku 를 통한 내장 tomcat 배포
-  - heroku 가 sleep 되지 않게 하기 위한 처리
 
 ### # DB
 
