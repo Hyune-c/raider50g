@@ -35,7 +35,6 @@ public class BookingServiceTest {
 
     // then
     assertThat(bookingList.createBookingSheet())
-        .startsWith("```" + dungeonType.getName())
         .contains("드루티어는오십골");
   }
 
