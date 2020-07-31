@@ -8,7 +8,7 @@ import lombok.Getter;
 public enum ClassType {
 
   DRUID("DRUID", "드루", 2, 2),
-  HUNTER("HUNTER", "냥꾼", 3, 4),
+  HUNTER("HUNTER", "냥꾼", 3, 3),
   MAGE("MAGE", "법사", 6, 7),
   PRIEST("PRIEST", "사제", 4, 5),
   ROUGE("ROUGE", "도적", 4, 6),
