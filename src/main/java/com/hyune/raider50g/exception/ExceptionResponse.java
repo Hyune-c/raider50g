@@ -10,8 +10,8 @@ import lombok.Getter;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 public class ExceptionResponse {
 
-  String exceptionClass;
-  String message;
+  private final String exceptionClass;
+  private final String message;
 
   public static ExceptionResponse from(Exception e) {
     return ExceptionResponse.builder()
