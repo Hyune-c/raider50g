@@ -5,13 +5,10 @@ import com.hyune.raider50g.domain.booking.Booking;
 import com.hyune.raider50g.domain.booking.RaidInfo;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 
 @Getter
 @Builder
@@ -19,36 +16,17 @@ import org.springframework.util.MultiValueMap;
 public class BookingList {
 
   private final RaidInfo raidInfo;
-  private final MultiValueMap<ClassType, String> classListMap;
+  private final RaiderList raiderList;
 
   public static BookingList of(RaidInfo raidInfo, List<Booking> bookings) {
-    MultiValueMap<ClassType, String> classListMap = new LinkedMultiValueMap<>();
-    bookings.forEach(
-        booking -> classListMap.add(booking.getClassType(), booking.getUserName()));
-
     return BookingList.builder()
         .raidInfo(raidInfo)
-        .classListMap(classListMap)
+        .raiderList(RaiderList.of(bookings))
         .build();
   }
 
-  private Integer bookingCount() {
-    return classListMap.keySet().stream()
-        .map(key -> classListMap.get(key).size())
-        .reduce(Integer::sum)
-        .orElse(0);
-  }
-
-  private String makeClassLine(ClassType key) {
-    return (Objects.isNull(classListMap.get(key)))
-        // 예약이 없는 직업군이면
-        ? String.format("%s (0/%d)", key.getName(), key.getMaxCount())
-        // 예약이 있는 직업군이면
-        : classListMap.get(key).stream().collect(Collectors.joining(
-            "\t",
-            String.format("%s (%d/%d)\t", key.getName(), classListMap.get(key).size(),
-                key.getMaxCount()),
-            ""));
+  private int bookingCount() {
+    return raiderList.raiderCount();
   }
 
   public String createBookingSheet() {
@@ -60,10 +38,10 @@ public class BookingList {
         , bookingCount());
     String category = "직업 현재/최대\t예약 인원\t(2~3탱전 10힐 4~5손님)";
     String contents = Arrays.stream(ClassType.values())
-        .map(this::makeClassLine)
+        .map(raiderList::makeClassLine)
         .collect(Collectors.joining("\n", "", "\n"));
 
-
-    return String.format("%s\n\n", notice) + String.format("```%s``````%s``````%s```", title, category, contents);
+    return String.format("%s\n\n", notice) + String
+        .format("```%s``````%s``````%s```", title, category, contents);
   }
 }
