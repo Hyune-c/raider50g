@@ -32,12 +32,10 @@ public class BookingList {
         , getNotice(), getTitle(), CATEGORY, getContent());
   }
 
-  private String getContent() {
-    final String CONTENT_FORMAT = "%s\t%s";
-    return Arrays.stream(ClassType.values())
-        .map(classType -> String.format(CONTENT_FORMAT
-            , classHeader(classType), classBody(classType)))
-        .collect(Collectors.joining("\n", "", "\n"));
+  private String getNotice() {
+    final String NOTICE_FORMAT = "손님팟 룰 : %s";
+    final String NOTICE_CONTENT = "https://discordapp.com/channels/256380741229871104/684266401661583439/730015381598502963";
+    return String.format(NOTICE_FORMAT, NOTICE_CONTENT);
   }
 
   private String getTitle() {
@@ -46,10 +44,12 @@ public class BookingList {
         , raidInfo.getDungeonType().getName(), raidInfo.getRaidDate(), bookingCount());
   }
 
-  private String getNotice() {
-    final String NOTICE_FORMAT = "손님팟 룰 : %s";
-    final String NOTICE_CONTENT = "https://discordapp.com/channels/256380741229871104/684266401661583439/730015381598502963";
-    return String.format(NOTICE_FORMAT, NOTICE_CONTENT);
+  private String getContent() {
+    final String CONTENT_FORMAT = "%s\t%s";
+    return Arrays.stream(ClassType.values())
+        .map(classType -> String.format(CONTENT_FORMAT
+            , classHeader(classType), classBody(classType)))
+        .collect(Collectors.joining("\n", "", "\n"));
   }
 
   private String classHeader(ClassType classType) {
@@ -59,8 +59,6 @@ public class BookingList {
   }
 
   private String classBody(ClassType classType) {
-    return (raiderList.size(classType) == 0)
-        ? ""
-        : String.join("\t", raiderList.getRaiders(classType));
+    return String.join("\t", raiderList.getRaiders(classType));
   }
 }

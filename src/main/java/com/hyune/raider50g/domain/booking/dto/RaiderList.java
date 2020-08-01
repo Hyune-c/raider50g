@@ -5,6 +5,7 @@ import com.hyune.raider50g.domain.booking.Booking;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import lombok.Builder;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -37,6 +38,7 @@ public class RaiderList {
   }
 
   public List<String> getRaiders(ClassType classType) {
-    return new ArrayList<>(descList.get(classType));
+    return Optional.ofNullable(descList.get(classType))
+        .orElse(new ArrayList<>());
   }
 }
