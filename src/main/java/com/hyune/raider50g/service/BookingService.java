@@ -7,6 +7,7 @@ import com.hyune.raider50g.domain.booking.dto.BookingCommand;
 import com.hyune.raider50g.domain.booking.dto.BookingList;
 import com.hyune.raider50g.repository.BookingRepository;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,15 +23,15 @@ public class BookingService {
   }
 
   public Booking cancelBooking(BookingCommand bookingCommand) {
-    Booking findBooking = bookingRepository.findOne(bookingCommand.getRaidInfo().getRaidDate()
-        , bookingCommand.getRaider().getUserName());
+    Booking findBooking = bookingRepository
+        .findOne(bookingCommand.getRaidDate(), bookingCommand.getRaiderName());
     return bookingRepository.cancel(findBooking);
   }
 
   public String makeInviteMacro(LocalDate findDate, String exceptUserName) {
     return bookingRepository.findAll(findDate).stream()
-        .filter(booking -> !booking.getUserName().equals(exceptUserName))
-        .map(booking -> booking.getRaider().inviteMacro())
+        .filter(booking -> !Objects.equals(booking.getUserName(), exceptUserName))
+        .map(Booking::inviteMacro)
         .collect(Collectors.joining("\n"));
   }
 

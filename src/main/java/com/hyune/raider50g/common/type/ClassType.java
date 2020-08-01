@@ -7,10 +7,16 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ClassType {
 
-  DRUID("DRUID", "드루", 2, 3), HUNTER("HUNTER", "냥꾼", 4, 5), MAGE("MAGE", "법사", 6, 7), PRIEST(
-      "PRIEST", "사제", 4, 6), ROUGE("ROUGE", "도적", 4, 6), SHAMAN("SHAMAN", "술사", 4, 6), WARLOCK(
-      "WARLOCK", "흑마", 2, 4), WARRIOR_DEALER("WARRIOR_DEALER", "딜전", 4, 6), WARRIOR_TANK(
-      "WARRIOR_TANK", "탱전", 2, 3);
+  DRUID("DRUID", "드루", 2, 2),
+  HUNTER("HUNTER", "냥꾼", 3, 3),
+  MAGE("MAGE", "법사", 6, 7),
+  PRIEST("PRIEST", "사제", 4, 5),
+  ROUGE("ROUGE", "도적", 4, 6),
+  SHAMAN("SHAMAN", "술사", 4, 6),
+  WARLOCK("WARLOCK", "흑마", 2, 3),
+  WARRIOR_DEALER("WARRIOR_DEALER", "딜전", 4, 6),
+  WARRIOR_TANK("WARRIOR_TANK", "탱전", 2, 3),
+  GUEST("GUEST", "손님", 4, 5);
 
   private final String key;
   private final String name;

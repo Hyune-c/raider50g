@@ -24,8 +24,4 @@ public class Raider {
 
   @Column(nullable = false)
   private String userName;
-
-  public String inviteMacro() {
-    return "/초대 " + userName;
-  }
 }

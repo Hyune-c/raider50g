@@ -5,62 +5,60 @@ import com.hyune.raider50g.domain.booking.Booking;
 import com.hyune.raider50g.domain.booking.RaidInfo;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Getter;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 
-@Getter
 @Builder
-@AllArgsConstructor
 public class BookingList {
 
-  private final RaidInfo raidInfo;
-  private final MultiValueMap<ClassType, String> classListMap;
+  private RaidInfo raidInfo;
+  private RaiderList raiderList;
 
   public static BookingList of(RaidInfo raidInfo, List<Booking> bookings) {
-    MultiValueMap<ClassType, String> classListMap = new LinkedMultiValueMap<>();
-    bookings.forEach(
-        booking -> classListMap.add(booking.getClassType(), booking.getUserName()));
-
     return BookingList.builder()
         .raidInfo(raidInfo)
-        .classListMap(classListMap)
+        .raiderList(RaiderList.of(bookings))
         .build();
   }
 
-  private Integer bookingCount() {
-    return classListMap.keySet().stream()
-        .map(key -> classListMap.get(key).size())
-        .reduce(Integer::sum)
-        .orElse(0);
-  }
-
-  private String makeClassLine(ClassType key) {
-    return (Objects.isNull(classListMap.get(key)))
-        // 예약이 없는 직업군이면
-        ? String.format("%s (0/%d)", key.getName(), key.getMaxCount())
-        // 예약이 있는 직업군이면
-        : classListMap.get(key).stream().collect(Collectors.joining(
-            "\t",
-            String.format("%s (%d/%d)\t", key.getName(), classListMap.get(key).size(),
-                key.getMaxCount()),
-            ""));
+  private int bookingCount() {
+    return raiderList.size();
   }
 
   public String createBookingSheet() {
-    String title = String.format("%s\t%s (일) PM 19:00\t%d/40"
-        , raidInfo.getDungeonType().getName()
-        , raidInfo.getRaidDate()
-        , bookingCount());
-    String category = "직업 현재/최대\t예약 인원\t(2~3탱전 11힐)";
-    String contents = Arrays.stream(ClassType.values())
-        .map(this::makeClassLine)
-        .collect(Collectors.joining("\n", "", "\n"));
+    final String CATEGORY = "직업 현재/최대\t예약 인원\t(2~3탱전 10힐 4~5손님)";
+    final String BOOKING_SHEET_FORMAT = "%s\n\n```%s``````%s``````%s```";
+    return String.format(BOOKING_SHEET_FORMAT
+        , getNotice(), getTitle(), CATEGORY, getContent());
+  }
 
-    return String.format("```%s``````%s``````%s```", title, category, contents);
+  private String getNotice() {
+    final String NOTICE_FORMAT = "손님팟 룰 : %s";
+    final String NOTICE_CONTENT = "https://discordapp.com/channels/256380741229871104/684266401661583439/730015381598502963";
+    return String.format(NOTICE_FORMAT, NOTICE_CONTENT);
+  }
+
+  private String getTitle() {
+    final String TITLE_FORMAT = "%s\t%s (일) PM 19:00\t%d/40";
+    return String.format(TITLE_FORMAT
+        , raidInfo.getDungeonName(), raidInfo.getRaidDate(), bookingCount());
+  }
+
+  private String getContent() {
+    final String CONTENT_FORMAT = "%s\t%s";
+    return Arrays.stream(ClassType.values())
+        .map(classType -> String.format(CONTENT_FORMAT
+            , classHeader(classType), classBody(classType)))
+        .collect(Collectors.joining("\n", "", "\n"));
+  }
+
+  private String classHeader(ClassType classType) {
+    final String CLASS_HEADER_FORMAT = "%s (%d/%d)";
+    return String.format(CLASS_HEADER_FORMAT
+        , classType.getName(), raiderList.size(classType), classType.getMaxCount());
+  }
+
+  private String classBody(ClassType classType) {
+    return String.join("\t", raiderList.getRaiders(classType));
   }
 }
