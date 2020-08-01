@@ -66,4 +66,9 @@ public class Booking implements Serializable {
   public ClassType getClassType() {
     return raider.getClassType();
   }
+
+  @JsonIgnore
+  public String inviteMacro() {
+    return "/초대 " + raider.getUserName();
+  }
 }

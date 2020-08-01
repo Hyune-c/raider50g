@@ -30,7 +30,7 @@ public class BookingService {
   public String makeInviteMacro(LocalDate findDate, String exceptUserName) {
     return bookingRepository.findAll(findDate).stream()
         .filter(booking -> !booking.getUserName().equals(exceptUserName))
-        .map(booking -> booking.getRaider().inviteMacro())
+        .map(Booking::inviteMacro)
         .collect(Collectors.joining("\n"));
   }
 
