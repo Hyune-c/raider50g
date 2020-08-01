@@ -2,7 +2,7 @@ package com.hyune.raider50g.domain.booking.dto;
 
 import com.hyune.raider50g.common.type.ClassType;
 import com.hyune.raider50g.domain.booking.Booking;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -39,6 +39,6 @@ public class RaiderList {
 
   public List<String> getRaiders(ClassType classType) {
     return Optional.ofNullable(descList.get(classType))
-        .orElse(new ArrayList<>());
+        .orElse(Collections.emptyList());
   }
 }
