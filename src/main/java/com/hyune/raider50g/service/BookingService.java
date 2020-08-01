@@ -7,6 +7,7 @@ import com.hyune.raider50g.domain.booking.dto.BookingCommand;
 import com.hyune.raider50g.domain.booking.dto.BookingList;
 import com.hyune.raider50g.repository.BookingRepository;
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class BookingService {
 
   public String makeInviteMacro(LocalDate findDate, String exceptUserName) {
     return bookingRepository.findAll(findDate).stream()
-        .filter(booking -> !booking.getUserName().equals(exceptUserName))
+        .filter(booking -> !Objects.equals(booking.getUserName(), exceptUserName))
         .map(Booking::inviteMacro)
         .collect(Collectors.joining("\n"));
   }
