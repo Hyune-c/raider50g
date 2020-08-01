@@ -41,7 +41,7 @@ public class BookingList {
   private String getTitle() {
     final String TITLE_FORMAT = "%s\t%s (일) PM 19:00\t%d/40";
     return String.format(TITLE_FORMAT
-        , raidInfo.getDungeonType().getName(), raidInfo.getRaidDate(), bookingCount());
+        , raidInfo.getDungeonName(), raidInfo.getRaidDate(), bookingCount());
   }
 
   private String getContent() {

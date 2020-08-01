@@ -25,4 +25,8 @@ public class RaidInfo {
 
   @Column(nullable = false)
   private LocalDate raidDate;
+
+  public String getDungeonName(){
+    return dungeonType.getName();
+  }
 }
