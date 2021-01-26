@@ -1,12 +1,14 @@
 # raider50g
+
 Managing 50G raiders discord
 
-[Work Log](https://github.com/Hyune-c/TIL/tree/master/Toy%20Project/Raider50G)
- 
+[Work Log](https://github.com/Hyune-c/raider50g/wiki/Work-Log-%234)
+
 ## 왜 만들어야 하는가 ?
 
 저는 여가 생활 중 하나로 WOW Classic 를 즐기고 있습니다  
-여러 가지 콘텐츠 중 공대장으로서 레이드를 제일 즐기고 있지만, 40명 +@ 에 달하는 인력과 일정 관리를 Discord 와 Google Spreadsheet 로 혼자 처리하고 있고 이 과정에서 누락의 위험성과 낮은 생산성의 작업이 반복되고 있습니다
+여러 가지 콘텐츠 중 공대장으로서 레이드를 제일 즐기고 있지만, 40명 +@ 에 달하는 인력과 일정 관리를 Discord 와 Google Spreadsheet 로 혼자 처리하고 있고 이 과정에서
+누락의 위험성과 낮은 생산성의 작업이 반복되고 있습니다
 
 이를 위해 본섭은 인 게임의 `달력`을 지원하지만, Classic 은 지원되지 않습니다
 
@@ -38,15 +40,15 @@ Managing 50G raiders discord
 ### # 일정 관리
 
 - 해당 일의 레이드 종료 후 새로운 예약 시작을 알리는 문구를 작성합니다
-  - ex : `##### 4/26일 (일) PM 19:00 검둥 예약받습니다`
+    - ex : `##### 4/26일 (일) PM 19:00 검둥 예약받습니다`
 
 ### # 인원 관리
 
 - 키워드를 통해 직업을 분류하고 ID 를 기록합니다
-  - ex : `술사스피카-복술`
-  - 메타 데이터를 관리하여 유사한 키워드를 허용합니다
-  - 해석할 수 없는 키워드가 입력될 경우 Bot 메세지를 통해 재입력을 유도합니다
-  - 인증되지 않은 인원 (기 참여회수 2회 이하) 의 경우 `확정`이 아닌 `확인 필요`로 기록합니다
+    - ex : `술사스피카-복술`
+    - 메타 데이터를 관리하여 유사한 키워드를 허용합니다
+    - 해석할 수 없는 키워드가 입력될 경우 Bot 메세지를 통해 재입력을 유도합니다
+    - 인증되지 않은 인원 (기 참여회수 2회 이하) 의 경우 `확정`이 아닌 `확인 필요`로 기록합니다
 - 취소에 대한 키워드를 구현합니다
 - 예약 인원에 변동이 생긴 경우 전체 리스트를 채널에 출력합니다
 
@@ -65,17 +67,17 @@ Managing 50G raiders discord
 
 - DDD 에 따른 도메인 구조 관리
 - Spring Boot
-  - Discord API 사용
-  - OAuth2 를 이용한 인증
-  - Web MVC 를 이용한 API 제공
-  - JPA, queryDSL 을 활용한 영속성 관리
+    - Discord API 사용
+    - OAuth2 를 이용한 인증
+    - Web MVC 를 이용한 API 제공
+    - JPA, queryDSL 을 활용한 영속성 관리
 - heroku 를 통한 내장 tomcat 배포
-  - heroku 가 sleep 되지 않게 하기 위한 처리
+    - heroku 가 sleep 되지 않게 하기 위한 처리
 
 ### # DB
 
 - mysql
-  - ERD 작성과 정규화
+    - ERD 작성과 정규화
 
 ### # 제약조건
 
