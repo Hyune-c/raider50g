@@ -1,7 +1,7 @@
 # raider50g
 Managing 50G raiders discord
 
-[Work Log](https://github.com/Hyune-c/TIL/tree/master/Toy%20Project/Raider50G)
+[Work Log](https://github.com/Hyune-c/raider50g/wiki/Work-Log-%234)
  
 ## 왜 만들어야 하는가 ?
 
